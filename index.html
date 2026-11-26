@@ -1,0 +1,601 @@
+<title>Plataforma MatrixOS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: grade modular (a "matriz") — blocos em células, navegação fixa no topo, área de membros com barra lateral */
+:root{
+  --bg:#F3F5F4; --surface:#FFFFFF; --surface-2:#E8ECEA; --line:#D3DAD7;
+  --fg:#14201C; --muted:#5B6B65;
+  --accent:#E4572E; --accent-ink:#FFFFFF; --accent-soft:#FBE3DA;
+  --teal:#0F7A6C; --teal-soft:#D5EEEA;
+  --ok:#1F8A4C; --warn:#B7791F;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1614; --surface:#17211E; --surface-2:#1F2B27; --line:#2C3A35;
+  --fg:#E6EEEB; --muted:#93A59E;
+  --accent:#FF7A50; --accent-ink:#1A0D07; --accent-soft:#3A221A;
+  --teal:#4CC3B1; --teal-soft:#16332E; --ok:#5BCB8A; --warn:#E2B45A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1614; --surface:#17211E; --surface-2:#1F2B27; --line:#2C3A35;
+  --fg:#E6EEEB; --muted:#93A59E;
+  --accent:#FF7A50; --accent-ink:#1A0D07; --accent-soft:#3A221A;
+  --teal:#4CC3B1; --teal-soft:#16332E; --ok:#5BCB8A; --warn:#E2B45A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--surface)}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em}
+.eyebrow{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--teal)}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:8px;cursor:pointer;text-decoration:none;font-weight:600;font-size:14px;transition:transform .15s,border-color .15s}
+.btn:hover{border-color:var(--fg)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{transform:translateY(-1px)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.chip.teal{background:var(--teal-soft);color:var(--teal)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.chip.ok{color:var(--ok)}
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:20px;text-decoration:none}
+.logo b{color:var(--accent)}
+.nav{display:flex;gap:4px;flex:1}
+.nav a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:14px}
+.nav a:hover,.nav a.on{color:var(--fg);background:var(--surface-2)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.burger{display:none}
+@media (max-width:860px){
+  .nav{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px))}
+  .nav.open{display:flex}
+  .burger{display:inline-flex}
+  .top-actions .hide-m{display:none}
+  .top .wrap{gap:10px}
+  .top-actions{margin-left:auto}
+}
+/* hero */
+.hero{padding-block:56px 40px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(36px,5.6vw,66px);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:54ch;margin-top:18px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cell{aspect-ratio:1;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);padding:12px;display:flex;flex-direction:column;justify-content:space-between;font-size:12px;max-width:100%}
+.cell .k{font-family:var(--f-display);font-weight:700;font-size:clamp(18px,2.4vw,26px)}
+.cell.a{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.cell.t{background:var(--teal-soft);color:var(--teal);border-color:transparent}
+.cell.e{background:transparent;border-style:dashed}
+@media (prefers-reduced-motion:no-preference){.cell{animation:pop .5s both}.cell:nth-child(2n){animation-delay:.08s}.cell:nth-child(3n){animation-delay:.16s}}
+@keyframes pop{from{transform:scale(.92)}to{transform:none}}
+@media (max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+.hero-grid>*{min-width:0}.matrix{grid-template-columns:repeat(4,minmax(0,1fr))}.cell{min-width:0;overflow:hidden}
+/* sections */
+section.s{padding-block:56px}
+.s-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.s-head h2{font-size:clamp(26px,3.4vw,38px);margin-top:8px}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:960px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.g4,.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{font-size:19px}
+.card.click{cursor:pointer;transition:border-color .15s,transform .15s}
+.card.click:hover{border-color:var(--fg);transform:translateY(-2px)}
+.card .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.stats>div{padding:22px;border-right:1px solid var(--line)}
+.stats>div:last-child{border-right:0}
+.stats .n{font-family:var(--f-display);font-weight:800;font-size:34px;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stats>div:nth-child(2){border-right:0}.stats>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:st}
+.step{border-top:3px solid var(--fg);padding-top:14px}
+.step .num{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.step h3{font-size:20px;margin:6px 0}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.quote{font-size:16px}
+.quote .who{display:flex;gap:10px;align-items:center;margin-top:auto}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--teal-soft);color:var(--teal);flex:none}
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+.plan{position:relative}
+.plan.hl{border:2px solid var(--accent)}
+.plan .price{font-family:var(--f-display);font-weight:800;font-size:40px;font-variant-numeric:tabular-nums}
+.plan .price small{font-size:14px;font-family:var(--f-body);font-weight:500;color:var(--muted)}
+.plan ul{list-style:none;padding:0;margin:6px 0 10px;display:grid;gap:8px}
+.plan li{display:flex;gap:8px;font-size:14px}
+.plan li::before{content:"";flex:none;width:14px;height:14px;margin-top:4px;border-radius:3px;background:var(--teal)}
+.plan li.no{color:var(--muted);text-decoration:line-through}
+.plan li.no::before{background:var(--line)}
+.toggle{display:inline-flex;background:var(--surface-2);border-radius:99px;padding:4px}
+.toggle button{border:0;background:transparent;padding:6px 14px;border-radius:99px;cursor:pointer;font-weight:600;font-size:13px;color:var(--muted)}
+.toggle button.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+th,td{padding:12px 16px;border-bottom:1px solid var(--line);text-align:left}
+th{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+td.c,th.c{text-align:center}
+tr:last-child td{border-bottom:0}
+/* faq */
+details{border-bottom:1px solid var(--line);padding:16px 0}
+summary{cursor:pointer;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--accent)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--muted);max-width:70ch}
+/* filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.filters input,.filters select,.field{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 12px;min-width:0}
+.filters input{flex:1 1 220px}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:500}
+.pill.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.empty{padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:var(--r)}
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:40px;padding-block:36px;background:var(--surface)}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;font-size:14px}
+.foot h4{font-size:14px;margin-bottom:10px}
+.foot a{display:block;color:var(--muted);text-decoration:none;padding:3px 0}
+.foot a:hover{color:var(--fg)}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}}
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(10,16,14,.55);display:grid;place-items:center;padding:16px}
+.modal .box{background:var(--surface);border-radius:14px;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:28px;display:grid;gap:14px;border:1px solid var(--line)}
+.modal .x{justify-self:end;border:0;background:var(--surface-2);border-radius:8px;width:32px;height:32px;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:8px;z-index:90;font-weight:600;font-size:14px}
+/* app */
+.app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:calc(100vh - 64px)}
+.side{background:var(--surface);border-right:1px solid var(--line);padding:20px 12px;display:flex;flex-direction:column;gap:2px}
+.side a{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:14px}
+.side a.on,.side a:hover{background:var(--surface-2);color:var(--fg)}
+.side a.on{box-shadow:inset 3px 0 0 var(--accent)}
+.side .lbl{padding:14px 12px 6px;font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.main{padding:28px max(16px,env(safe-area-inset-right,0px)) 40px 28px;display:grid;gap:22px;align-content:start;min-width:0}
+.main h1{font-size:30px}
+@media (max-width:860px){.app{grid-template-columns:1fr}.side{flex-direction:row;overflow-x:auto;padding:8px max(16px,env(safe-area-inset-left,0px));border-right:0;border-bottom:1px solid var(--line)}.side .lbl{display:none}.side a{white-space:nowrap}.main{padding-left:max(16px,env(safe-area-inset-left,0px))}}
+.bar{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:99px;transition:width .3s}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi .n{font-family:var(--f-display);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.lesson{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.lesson:last-child{border-bottom:0}
+.check{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);background:transparent;cursor:pointer;flex:none;display:grid;place-items:center}
+.check.done{background:var(--teal);border-color:var(--teal);color:var(--surface)}
+.player{aspect-ratio:16/9;max-width:100%;border-radius:var(--r);background:var(--fg);color:var(--bg);display:grid;place-items:center;position:relative;overflow:hidden}
+.player .play{width:64px;height:64px;border-radius:50%;background:var(--accent);border:0;cursor:pointer;display:grid;place-items:center}
+.player .cap{position:absolute;left:16px;bottom:14px;right:16px;font-size:14px}
+.split{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:960px){.split{grid-template-columns:1fr}}
+.post{display:grid;gap:8px}
+.post .hd{display:flex;gap:10px;align-items:center}
+.post .act{display:flex;gap:8px}
+.chat{display:flex;flex-direction:column;gap:12px;max-height:460px;overflow:auto;padding:4px}
+.msg{max-width:80%;padding:12px 14px;border-radius:12px;font-size:14px;white-space:pre-wrap}
+.msg.bot{background:var(--surface-2);align-self:flex-start;border-top-left-radius:4px}
+.msg.me{background:var(--accent);color:var(--accent-ink);align-self:flex-end;border-top-right-radius:4px}
+.composer{display:flex;gap:8px}
+.composer input,.composer textarea{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 12px;min-width:0}
+.sugs{display:flex;gap:6px;flex-wrap:wrap}
+.slot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.slot:last-child{border-bottom:0}
+.date{font-family:var(--f-mono);font-size:12px;background:var(--surface-2);border-radius:8px;padding:8px 10px;text-align:center;min-width:64px}
+.date b{display:block;font-family:var(--f-display);font-size:20px}
+.login{max-width:420px;margin:56px auto;display:grid;gap:14px}
+.login label{display:grid;gap:6px;font-size:13px;font-weight:600}
+.cert{border:2px solid var(--fg);border-radius:var(--r);padding:28px;background:var(--surface);display:grid;gap:10px;text-align:center}
+.cert h2{font-size:28px}
+.demo-tag{font-family:var(--f-mono);font-size:11px;color:var(--warn)}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="MatrixOS, início">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="0" y="0" width="8" height="8" rx="2" fill="var(--accent)"/><rect x="10" y="0" width="8" height="8" rx="2" fill="var(--fg)"/><rect x="20" y="0" width="8" height="8" rx="2" fill="var(--line)"/><rect x="0" y="10" width="8" height="8" rx="2" fill="var(--fg)"/><rect x="10" y="10" width="8" height="8" rx="2" fill="var(--teal)"/><rect x="20" y="10" width="8" height="8" rx="2" fill="var(--fg)"/><rect x="0" y="20" width="8" height="8" rx="2" fill="var(--line)"/><rect x="10" y="20" width="8" height="8" rx="2" fill="var(--fg)"/><rect x="20" y="20" width="8" height="8" rx="2" fill="var(--accent)"/></svg>
+      <span>Matrix<b>OS</b></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#home" data-r="home">Plataforma</a>
+      <a href="#solucoes" data-r="solucoes">Soluções</a>
+      <a href="#cases" data-r="cases">Cases</a>
+      <a href="#planos" data-r="planos">Planos</a>
+      <a href="#guia" data-r="guia">Guia de implementação</a>
+    </nav>
+    <div class="top-actions" id="topActions"></div>
+    <button class="btn sm burger" id="burger" aria-label="Abrir menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<div id="view"></div>
+<div id="layer"></div>
+
+<script>
+/* ================= DADOS (exemplos do protótipo) ================= */
+const AREAS=["Vendas","Atendimento","Marketing","Financeiro","Operações","RH","Jurídico"];
+const SOLS=[
+ {id:1,t:"Qualificador de leads no WhatsApp",a:"Vendas",tipo:"Agente",n:"Iniciante",h:3,d:"Agente que conversa com o lead, faz as perguntas de qualificação e entrega no CRM só quem tem perfil de compra.",st:["WhatsApp Business API","n8n","CRM"],r:"-40% tempo do SDR"},
+ {id:2,t:"Central de respostas com base de conhecimento",a:"Atendimento",tipo:"Agente",n:"Intermediário",h:6,d:"Assistente que responde clientes com base nos seus manuais, políticas e histórico de tickets, e escala para humano quando não tem certeza.",st:["RAG","Zendesk","Make"],r:"62% dos tickets resolvidos sem humano"},
+ {id:3,t:"Fábrica de conteúdo para redes",a:"Marketing",tipo:"Automação",n:"Iniciante",h:2,d:"A partir de um tema, gera roteiro, legenda e variações para 4 redes, já no calendário editorial.",st:["Planilha","LLM","Agendador"],r:"20 posts/semana com 1 pessoa"},
+ {id:4,t:"Conciliação de extratos e notas",a:"Financeiro",tipo:"Automação",n:"Intermediário",h:5,d:"Lê extratos e notas fiscais, cruza lançamentos e aponta divergências para revisão.",st:["OCR","Planilha","ERP"],r:"8h/semana economizadas"},
+ {id:5,t:"Triagem de currículos com critérios da vaga",a:"RH",tipo:"Agente",n:"Iniciante",h:2,d:"Ranqueia currículos contra os critérios da vaga e gera um resumo justificado de cada candidato.",st:["Formulário","LLM","Drive"],r:"Triagem 5x mais rápida"},
+ {id:6,t:"Revisor de contratos com checklist",a:"Jurídico",tipo:"Agente",n:"Avançado",h:8,d:"Compara contratos recebidos com o padrão da empresa e destaca cláusulas de risco para o jurídico.",st:["LLM","Docs","Assinatura digital"],r:"-55% tempo de revisão"},
+ {id:7,t:"Previsão de ruptura de estoque",a:"Operações",tipo:"Análise",n:"Avançado",h:10,d:"Modelo que cruza vendas, sazonalidade e prazos de fornecedor para avisar antes de faltar produto.",st:["Python","BI","ERP"],r:"-30% rupturas"},
+ {id:8,t:"Follow-up automático pós-proposta",a:"Vendas",tipo:"Automação",n:"Iniciante",h:2,d:"Sequência de mensagens personalizadas com base no que foi conversado na reunião.",st:["Transcrição","CRM","E-mail"],r:"+18% conversão de propostas"},
+ {id:9,t:"Pesquisa de satisfação que se analisa sozinha",a:"Atendimento",tipo:"Análise",n:"Iniciante",h:3,d:"Agrupa respostas abertas por tema e sentimento e envia um resumo semanal para a liderança.",st:["Formulário","LLM","Slack"],r:"Leitura de 2 mil respostas em minutos"},
+ {id:10,t:"Gerador de anúncios com testes A/B",a:"Marketing",tipo:"Automação",n:"Intermediário",h:4,d:"Cria variações de criativo e texto, sobe nas campanhas e pausa as piores automaticamente.",st:["Meta Ads","Imagem IA","Make"],r:"-22% custo por lead"},
+ {id:11,t:"Assistente de onboarding de funcionários",a:"RH",tipo:"Agente",n:"Intermediário",h:5,d:"Tira dúvidas de novos colaboradores sobre benefícios, ferramentas e processos, 24h por dia.",st:["RAG","Teams","Notion"],r:"-70% dúvidas no RH"},
+ {id:12,t:"Relatório gerencial em linguagem natural",a:"Financeiro",tipo:"Análise",n:"Avançado",h:7,d:"O gestor pergunta em português e recebe números, gráfico e explicação a partir do banco de dados.",st:["SQL","LLM","BI"],r:"Fechamento 3 dias antes"},
+];
+const CASES=[
+ {e:"Rede de clínicas odontológicas",s:"Saúde",p:"38 funcionários",a:"Atendimento",m:"-48%",ml:"faltas em consultas",d:"Agente de confirmação e reagendamento via WhatsApp integrado à agenda."},
+ {e:"Distribuidora de autopeças",s:"Varejo B2B",p:"120 funcionários",a:"Vendas",m:"+27%",ml:"pedidos recorrentes",d:"Recomendação de reposição para lojistas com base no histórico de compras."},
+ {e:"Escritório de contabilidade",s:"Serviços",p:"15 funcionários",a:"Financeiro",m:"320h",ml:"economizadas por mês",d:"Leitura automática de documentos de clientes e lançamento no sistema contábil."},
+ {e:"E-commerce de moda",s:"Varejo",p:"60 funcionários",a:"Marketing",m:"3,1x",ml:"retorno em anúncios",d:"Produção de criativos com IA e testes automáticos por público."},
+ {e:"Construtora regional",s:"Construção",p:"200 funcionários",a:"Operações",m:"-19%",ml:"desperdício de material",d:"Previsão de compras por etapa de obra e alerta de desvios."},
+ {e:"Indústria de alimentos",s:"Indústria",p:"450 funcionários",a:"RH",m:"-35%",ml:"tempo de contratação",d:"Triagem de currículos e agendamento automático de entrevistas."},
+];
+const TRILHAS=[
+ {id:"t1",t:"Fundamentos de IA para gestores",nivel:"Iniciante",aulas:["O que a IA faz bem (e o que não faz)","Como escolher o primeiro processo","Custos reais de um projeto de IA","Riscos, LGPD e governança","Montando o plano de 90 dias"]},
+ {id:"t2",t:"Agentes de IA na prática",nivel:"Intermediário",aulas:["Anatomia de um agente","Prompts de sistema que funcionam","Conectando o agente ao WhatsApp","Base de conhecimento (RAG)","Quando passar para um humano","Medindo a qualidade das respostas"]},
+ {id:"t3",t:"Automação sem código",nivel:"Iniciante",aulas:["Gatilhos, ações e fluxos","Seu primeiro fluxo no n8n","Integração com planilhas e CRM","Tratamento de erros"]},
+ {id:"t4",t:"Dados e decisões com IA",nivel:"Avançado",aulas:["Organizando os dados da empresa","Perguntas em linguagem natural ao banco","Painéis que a diretoria lê","Previsões simples que dão retorno","Do piloto à operação"]},
+];
+const MENTORIAS=[
+ {d:"02",m:"DEZ",h:"19:00",t:"Clínica de agentes: traga o seu para revisão",com:"Equipe MatrixOS",tipo:"Grupo",vagas:14},
+ {d:"04",m:"DEZ",h:"12:30",t:"Como calcular o ROI de um projeto de IA",com:"Equipe MatrixOS",tipo:"Grupo",vagas:30},
+ {d:"09",m:"DEZ",h:"19:00",t:"IA no comercial: do lead ao fechamento",com:"Equipe MatrixOS",tipo:"Grupo",vagas:22},
+ {d:"11",m:"DEZ",h:"10:00",t:"Sessão individual com arquiteto de soluções",com:"Arquiteto MatrixOS",tipo:"Individual",vagas:3,plano:"Corporate"},
+ {d:"16",m:"DEZ",h:"19:00",t:"LGPD e IA: o que muda na prática",com:"Convidado jurídico",tipo:"Grupo",vagas:40},
+];
+const POSTS0=[
+ {id:1,a:"Marina T.",c:"Diretora comercial · Varejo",t:"Colocamos o qualificador de leads no ar ontem. Em 24h ele filtrou 140 conversas e passou 31 para o time. Alguém já integrou com Pipedrive?",l:12,tag:"Vendas",ago:"2 h"},
+ {id:2,a:"Rogério P.",c:"Sócio · Contabilidade",t:"Dica para quem está começando: escolham um processo chato e repetitivo, não o mais estratégico. O primeiro projeto precisa dar certo rápido.",l:34,tag:"Estratégia",ago:"5 h"},
+ {id:3,a:"Aline K.",c:"Head de RH · Indústria",t:"Alguém tem um modelo de política interna de uso de IA para compartilhar? Precisamos aprovar com o jurídico este mês.",l:8,tag:"RH",ago:"1 dia"},
+];
+const PLANS=[
+ {id:"Essencial",m:1490,desc:"Para quem quer começar a implementar com método.",f:["Catálogo completo de soluções prontas","Trilhas e aulas práticas","Consultor IA dentro da plataforma","Comunidade de empresários e gestores","2 mentorias em grupo por mês"],no:["Arquiteto de soluções dedicado","Sessões individuais"]},
+ {id:"Pro",m:2890,hl:true,desc:"Para empresas implementando em mais de uma área.",f:["Tudo do Essencial","Mentorias em grupo semanais","Soluções avançadas e modelos premium","Imersão presencial de implementação","Suporte prioritário em até 4h"],no:["Arquiteto de soluções dedicado"]},
+ {id:"Corporate",m:5490,desc:"Para quem quer implementação assistida e sob medida.",f:["Tudo do Pro","Arquiteto de soluções dedicado","Construção de soluções sob medida","2 h/mês de mentoria individual","SLA dedicado e acesso para até 15 pessoas"],no:[]},
+];
+const FAQ=[
+ ["Preciso saber programar?","Não. A maioria das soluções usa ferramentas sem código e vem com passo a passo em vídeo. As soluções avançadas indicam quando é preciso alguém técnico."],
+ ["Em quanto tempo vejo resultado?","As soluções de nível iniciante costumam entrar no ar em uma semana. O plano de 90 dias da trilha de fundamentos organiza as próximas."],
+ ["Posso trocar de plano?","Sim, a qualquer momento. Na troca para cima, você paga só a diferença proporcional."],
+ ["Como funcionam as mentorias?","São encontros ao vivo com a equipe, em grupo ou individuais conforme o plano. Você reserva a vaga na agenda da área de membros e recebe a gravação depois."],
+ ["Os dados da minha empresa ficam seguros?","As soluções seguem um checklist de LGPD e indicam onde cada dado é processado. Nenhum dado seu é usado para treinar modelos."],
+];
+
+/* ================= ESTADO ================= */
+const store={get(k,d){try{const v=localStorage.getItem("mx_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("mx_"+k,JSON.stringify(v))}catch(e){}}};
+const S={
+  user:store.get("user",null),
+  done:store.get("done",{}),
+  saved:store.get("saved",[]),
+  booked:store.get("booked",[]),
+  posts:store.get("posts",POSTS0),
+  liked:store.get("liked",[]),
+  chat:store.get("chat",null),
+  annual:true, solArea:"Todas", solQ:"", solTipo:"Todas", caseArea:"Todas",
+  trilha:"t1", aula:0, postTag:"Todos"
+};
+const save=k=>store.set(k,S[k]);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const brl=n=>"R$ "+n.toLocaleString("pt-BR");
+const initials=n=>n.split(" ").map(x=>x[0]).join("").slice(0,2);
+function toast(t){const el=document.createElement("div");el.className="toast";el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2200)}
+function price(p){return S.annual?Math.round(p.m*0.85):p.m}
+
+/* ================= COMPONENTES ================= */
+function solCard(s){const sv=S.saved.includes(s.id);return `<article class="card click" data-sol="${s.id}" tabindex="0">
+ <div style="display:flex;justify-content:space-between;gap:8px"><span class="chip teal">${s.a}</span><span class="mono muted">~${s.h}h</span></div>
+ <h3>${esc(s.t)}</h3><p class="muted">${esc(s.d)}</p>
+ <div class="meta"><span class="chip">${s.tipo}</span><span class="chip">${s.n}</span>${sv?'<span class="chip acc">Salva</span>':""}</div></article>`}
+function caseCard(c){return `<article class="card"><span class="eyebrow">${c.s} · ${c.p}</span><h3>${esc(c.e)}</h3>
+ <div><span style="font-family:var(--f-display);font-weight:800;font-size:38px;color:var(--accent)">${c.m}</span> <span class="muted">${c.ml}</span></div>
+ <p class="muted">${esc(c.d)}</p><div class="meta"><span class="chip teal">${c.a}</span></div></article>`}
+function planCards(){return `<div class="plans">${PLANS.map(p=>`<article class="card plan ${p.hl?"hl":""}">
+ <div style="display:flex;justify-content:space-between;align-items:center"><h3>${p.id}</h3>${p.hl?'<span class="chip acc">Mais escolhido</span>':""}</div>
+ <p class="muted">${p.desc}</p>
+ <div class="price">${brl(price(p))}<small> /mês</small></div>
+ <p class="mono muted">${S.annual?"cobrado anualmente · economize 15%":"cobrança mensal, cancele quando quiser"}</p>
+ <ul>${p.f.map(x=>`<li>${x}</li>`).join("")}${p.no.map(x=>`<li class="no">${x}</li>`).join("")}</ul>
+ <button class="btn ${p.hl?"primary":""}" data-assinar="${p.id}" style="margin-top:auto;justify-content:center">Assinar ${p.id}</button></article>`).join("")}</div>`}
+function billingToggle(){return `<div class="toggle" role="group" aria-label="Ciclo de cobrança"><button data-cycle="m" class="${S.annual?"":"on"}">Mensal</button><button data-cycle="a" class="${S.annual?"on":""}">Anual −15%</button></div>`}
+function footer(){return `<footer><div class="wrap foot">
+ <div><a class="logo" href="#home" style="padding:0">Matrix<b>OS</b></a><p class="muted" style="margin-top:10px;max-width:34ch">O sistema operacional de IA para pequenas e médias empresas brasileiras.</p><p class="demo-tag" style="margin-top:10px">PROTÓTIPO · dados e depoimentos são exemplos</p></div>
+ <div><h4>Plataforma</h4><a href="#solucoes">Soluções</a><a href="#cases">Cases</a><a href="#planos">Planos</a><a href="#guia">Guia de implementação</a></div>
+ <div><h4>Membros</h4><a href="#entrar">Entrar</a><a href="#trilhas">Trilhas</a><a href="#mentorias">Mentorias</a><a href="#comunidade">Comunidade</a></div>
+ <div><h4>Empresa</h4><a href="#guia">Sobre o método</a><a href="#planos">Para empresas</a><a href="#home">Termos e privacidade</a></div>
+ </div></footer>`}
+
+/* ================= PÁGINAS PÚBLICAS ================= */
+function pHome(){return `
+<section class="hero"><div class="wrap hero-grid">
+ <div><span class="eyebrow">Plataforma de implementação de IA</span>
+ <h1>A IA rodando na sua empresa, <em>não só na apresentação.</em></h1>
+ <p class="lead">Soluções prontas para copiar, trilhas práticas, mentorias ao vivo e uma comunidade de gestores que já estão implementando. Tudo em um só sistema.</p>
+ <div class="ctas"><a class="btn primary" href="#entrar">Começar teste de 7 dias</a><a class="btn" href="#planos">Ver planos</a></div>
+ <p class="mono muted" style="margin-top:16px">Sem cartão no teste · cancele quando quiser</p></div>
+ <div class="matrix" aria-hidden="true">
+  <div class="cell a"><span>Soluções</span><span class="k">${SOLS.length*13}</span></div>
+  <div class="cell"><span>Vendas</span><span class="k">↗</span></div>
+  <div class="cell t"><span>Agentes</span><span class="k">24/7</span></div>
+  <div class="cell e"></div>
+  <div class="cell"><span>Cases</span><span class="k">380+</span></div>
+  <div class="cell t"><span>Mentorias</span><span class="k">ao vivo</span></div>
+  <div class="cell e"></div>
+  <div class="cell"><span>Financeiro</span><span class="k">−8h</span></div>
+  <div class="cell e"></div>
+  <div class="cell"><span>RH</span><span class="k">5x</span></div>
+  <div class="cell a"><span>ROI médio</span><span class="k">4,2x</span></div>
+  <div class="cell"><span>Atendimento</span><span class="k">62%</span></div>
+ </div>
+</div></section>
+<div class="wrap"><div class="stats">
+ <div><div class="n">${SOLS.length*13}</div><div class="muted">soluções prontas</div></div>
+ <div><div class="n">380+</div><div class="muted">cases documentados</div></div>
+ <div><div class="n">${TRILHAS.length*5}</div><div class="muted">trilhas práticas</div></div>
+ <div><div class="n">8</div><div class="muted">mentorias ao vivo por mês</div></div>
+</div><p class="demo-tag" style="margin-top:8px">Números ilustrativos do protótipo</p></div>
+
+<section class="s"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">O método</span><h2>Quatro passos do diagnóstico ao resultado</h2></div></div>
+ <div class="steps">
+  <div class="step"><span class="num">PASSO 1</span><h3>Diagnosticar</h3><p class="muted">O Consultor IA entrevista você e aponta os 3 processos com maior retorno.</p></div>
+  <div class="step"><span class="num">PASSO 2</span><h3>Escolher</h3><p class="muted">Você pega uma solução pronta do catálogo, com custo e tempo estimados.</p></div>
+  <div class="step"><span class="num">PASSO 3</span><h3>Implementar</h3><p class="muted">Siga o passo a passo em vídeo e tire dúvidas nas mentorias ao vivo.</p></div>
+  <div class="step"><span class="num">PASSO 4</span><h3>Medir</h3><p class="muted">Registre o antes e depois no painel e compartilhe o case com a comunidade.</p></div>
+ </div>
+</div></section>
+
+<section class="s" style="background:var(--surface);border-block:1px solid var(--line)"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Catálogo</span><h2>Soluções prontas por área</h2></div><a class="btn" href="#solucoes">Ver todas as soluções</a></div>
+ <div class="grid g3">${SOLS.slice(0,6).map(solCard).join("")}</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Cases</span><h2>Empresas como a sua, com números</h2></div><a class="btn" href="#cases">Ver cases</a></div>
+ <div class="grid g3">${CASES.slice(0,3).map(caseCard).join("")}</div>
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">O que tem dentro</span><h2>Uma área de membros feita para implementar</h2></div></div>
+ <div class="grid g4">
+  <div class="card"><span class="chip acc">Soluções</span><h3>Catálogo plug-and-play</h3><p class="muted">Modelos, fluxos e prompts prontos, com estimativa de horas e ferramentas.</p></div>
+  <div class="card"><span class="chip acc">Trilhas</span><h3>Aulas curtas e práticas</h3><p class="muted">Do fundamento à operação, com certificado ao concluir cada trilha.</p></div>
+  <div class="card"><span class="chip acc">Mentorias</span><h3>Ao vivo, toda semana</h3><p class="muted">Encontros em grupo e sessões individuais com arquitetos de solução.</p></div>
+  <div class="card"><span class="chip acc">Consultor IA</span><h3>Respostas na hora</h3><p class="muted">Pergunte sobre o seu caso e receba a solução e a trilha indicadas.</p></div>
+ </div>
+</div></section>
+
+<section class="s" style="background:var(--surface);border-block:1px solid var(--line)"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Depoimentos</span><h2>Quem já está implementando</h2></div><span class="demo-tag">DEPOIMENTOS DE EXEMPLO</span></div>
+ <div class="grid g3">
+  <div class="card quote"><p>“Em três semanas o atendimento passou a responder fora do horário comercial. A equipe parou de ter medo da IA quando viu o primeiro resultado.”</p><div class="who"><span class="av">LC</span><div><b>Lúcia C.</b><div class="muted mono">Clínica · Belo Horizonte</div></div></div></div>
+  <div class="card quote"><p>“O que mais ajudou foi a mentoria semanal. Eu chegava com o problema travado e saía com o próximo passo.”</p><div class="who"><span class="av">FA</span><div><b>Fábio A.</b><div class="muted mono">Distribuidora · Campinas</div></div></div></div>
+  <div class="card quote"><p>“Copiamos a solução de conciliação quase sem alterar. Fechamos o mês dois dias antes.”</p><div class="who"><span class="av">RS</span><div><b>Renata S.</b><div class="muted mono">Contabilidade · Recife</div></div></div></div>
+ </div>
+</div></section>
+
+<section class="s"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Planos</span><h2>Escolha o ritmo da sua implementação</h2></div>${billingToggle()}</div>
+ ${planCards()}
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap" style="max-width:820px">
+ <span class="eyebrow">Perguntas frequentes</span><h2 style="font-size:32px;margin:8px 0 12px">Dúvidas comuns</h2>
+ ${FAQ.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join("")}
+</div></section>
+${footer()}`}
+
+function pSolucoes(){const tipos=["Todas","Agente","Automação","Análise"];
+ const list=SOLS.filter(s=>(S.solArea==="Todas"||s.a===S.solArea)&&(S.solTipo==="Todas"||s.tipo===S.solTipo)&&(!S.solQ||(s.t+s.d).toLowerCase().includes(S.solQ.toLowerCase())));
+ return `<section class="s"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Catálogo de soluções</span><h2>Soluções prontas para implementar</h2><p class="muted" style="margin-top:8px">Clique em uma solução para ver ferramentas, tempo estimado e resultado esperado.</p></div></div>
+ <div class="filters"><input id="solQ" type="search" placeholder="Buscar solução, ex.: WhatsApp, contrato…" value="${esc(S.solQ)}" aria-label="Buscar soluções">
+  <select id="solTipo" aria-label="Tipo">${tipos.map(t=>`<option ${t===S.solTipo?"selected":""}>${t}</option>`).join("")}</select></div>
+ <div class="filters">${["Todas",...AREAS].map(a=>`<button class="pill ${a===S.solArea?"on":""}" data-area="${a}">${a}</button>`).join("")}</div>
+ <p class="mono muted" style="margin-bottom:12px">${list.length} ${list.length===1?"solução":"soluções"}</p>
+ ${list.length?`<div class="grid g3">${list.map(solCard).join("")}</div>`:`<div class="empty">Nenhuma solução com esses filtros. Tente outra área ou limpe a busca.</div>`}
+ </div></section>${footer()}`}
+
+function pCases(){const list=CASES.filter(c=>S.caseArea==="Todas"||c.a===S.caseArea);
+ return `<section class="s"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Cases reais</span><h2>Resultados medidos, não promessas</h2></div><span class="demo-tag">CASES DE EXEMPLO</span></div>
+ <div class="filters">${["Todas",...AREAS].map(a=>`<button class="pill ${a===S.caseArea?"on":""}" data-carea="${a}">${a}</button>`).join("")}</div>
+ ${list.length?`<div class="grid g3">${list.map(caseCard).join("")}</div>`:`<div class="empty">Ainda não há cases nesta área.</div>`}
+ </div></section>${footer()}`}
+
+function pPlanos(){const rows=[["Catálogo de soluções","✓","✓","✓"],["Trilhas e certificados","✓","✓","✓"],["Consultor IA","✓","✓","✓"],["Comunidade","✓","✓","✓"],["Mentorias em grupo","2/mês","Semanais","Semanais"],["Soluções avançadas","—","✓","✓"],["Imersão presencial","—","✓","✓"],["Arquiteto de soluções","—","—","✓"],["Mentoria individual","—","—","2 h/mês"],["Usuários incluídos","3","8","15"],["Suporte","E-mail","Prioritário 4h","SLA dedicado"]];
+ return `<section class="s"><div class="wrap">
+ <div class="s-head"><div><span class="eyebrow">Planos e preços</span><h2>Um plano para cada fase da implementação</h2><p class="muted" style="margin-top:8px">Troque de plano quando quiser pagando só a diferença.</p></div>${billingToggle()}</div>
+ ${planCards()}
+ <h3 style="font-size:22px;margin:40px 0 14px">Compare os planos</h3>
+ <div class="tbl-wrap"><table><thead><tr><th>Recurso</th>${PLANS.map(p=>`<th class="c">${p.id}</th>`).join("")}</tr></thead>
+ <tbody>${rows.map(r=>`<tr><td>${r[0]}</td>${r.slice(1).map(v=>`<td class="c">${v}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+ </div></section>${footer()}`}
+
+function pGuia(){const st=[["Mapeie as tarefas repetitivas","Liste o que sua equipe faz toda semana e quanto tempo leva. Isso vira a sua lista de candidatos."],["Priorize por impacto e facilidade","Dê nota de 1 a 5 para retorno e para facilidade. Comece pelo que tem nota alta nos dois."],["Escolha uma solução pronta","Use um modelo testado em vez de começar do zero. O catálogo traz custo e tempo estimados."],["Rode um piloto de 2 semanas","Com um grupo pequeno, meça o antes e o depois com um único número."],["Leve para a operação","Documente, treine a equipe e defina quem é dono da solução."],["Repita com o próximo processo","Cada implementação deixa a próxima mais rápida."]];
+ return `<section class="s"><div class="wrap" style="max-width:860px">
+ <span class="eyebrow">Guia gratuito</span><h2 style="font-size:clamp(28px,4vw,44px);margin:8px 0 14px">Como implementar IA na sua empresa em 6 passos</h2>
+ <p class="muted" style="font-size:17px;max-width:62ch">O mesmo roteiro que usamos com os membros, resumido. Leia em 5 minutos e saia com o primeiro processo escolhido.</p>
+ <div class="grid" style="margin-top:28px;gap:0">${st.map((s,i)=>`<div class="lesson" style="align-items:flex-start;padding:18px 0"><span class="mono" style="color:var(--accent);min-width:32px">${String(i+1).padStart(2,"0")}</span><div><h3 style="font-size:19px">${s[0]}</h3><p class="muted" style="margin-top:4px">${s[1]}</p></div></div>`).join("")}</div>
+ <div class="card" style="margin-top:28px;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><h3>Quer ajuda para o passo 1?</h3><p class="muted">O Consultor IA faz o diagnóstico em 3 minutos no teste gratuito.</p></div><a class="btn primary" href="#entrar">Fazer diagnóstico</a></div>
+ </div></section>${footer()}`}
+
+function pEntrar(){return `<div class="wrap"><form class="login card" id="loginForm">
+ <span class="eyebrow">Área de membros</span><h2 style="font-size:28px">Entrar na MatrixOS</h2>
+ <p class="muted">Protótipo: qualquer nome e e-mail funcionam. Nada é enviado para fora do seu navegador.</p>
+ <label for="lgName">Seu nome<input class="field" id="lgName" required value="Hugo"></label>
+ <label for="lgCo">Empresa<input class="field" id="lgCo" value="Minha Empresa Ltda"></label>
+ <label for="lgPlan">Plano<select class="field" id="lgPlan">${PLANS.map(p=>`<option ${p.id==="Pro"?"selected":""}>${p.id}</option>`).join("")}</select></label>
+ <button class="btn primary" type="submit" style="justify-content:center">Entrar</button>
+ </form></div>`}
+
+/* ================= ÁREA DE MEMBROS ================= */
+function trilhaProg(t){const d=S.done[t.id]||[];return {n:d.length,tot:t.aulas.length,pct:Math.round(d.length/t.aulas.length*100)}}
+function shell(r,inner){const links=[["painel","Painel"],["trilhas","Trilhas"],["biblioteca","Minhas soluções"],["mentorias","Mentorias"],["comunidade","Comunidade"],["consultor","Consultor IA"],["perfil","Perfil e certificados"]];
+ return `<div class="app"><aside class="side"><div class="lbl">Área de membros</div>${links.map(([k,l])=>`<a href="#${k}" class="${r===k?"on":""}">${l}</a>`).join("")}
+ <div class="lbl">Explorar</div><a href="#solucoes">Catálogo de soluções</a><a href="#cases">Cases</a></aside><main class="main">${inner}</main></div>`}
+
+function aPainel(){const tot=TRILHAS.reduce((a,t)=>a+t.aulas.length,0),dn=TRILHAS.reduce((a,t)=>a+(S.done[t.id]||[]).length,0);
+ const next=TRILHAS.find(t=>trilhaProg(t).pct<100)||TRILHAS[0];const nb=MENTORIAS.filter((m,i)=>S.booked.includes(i));
+ return `<div><span class="eyebrow">Plano ${esc(S.user.plano)} · ${esc(S.user.empresa)}</span><h1 style="margin-top:6px">Olá, ${esc(S.user.nome.split(" ")[0])}</h1></div>
+ <div class="kpis">
+  <div class="card kpi"><span class="muted">Aulas concluídas</span><span class="n">${dn}/${tot}</span><div class="bar"><i style="width:${Math.round(dn/tot*100)}%"></i></div></div>
+  <div class="card kpi"><span class="muted">Soluções salvas</span><span class="n">${S.saved.length}</span></div>
+  <div class="card kpi"><span class="muted">Mentorias reservadas</span><span class="n">${S.booked.length}</span></div>
+  <div class="card kpi"><span class="muted">Horas economizadas</span><span class="n">${S.saved.reduce((a,id)=>a+SOLS.find(s=>s.id===id).h*2,0)}h</span><span class="mono muted">estimativa/mês</span></div>
+ </div>
+ <div class="split">
+  <div class="card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3>Continue de onde parou</h3><span class="chip">${next.nivel}</span></div>
+   <p><b>${next.t}</b></p><div class="bar"><i style="width:${trilhaProg(next).pct}%"></i></div><p class="mono muted">${trilhaProg(next).n} de ${next.aulas.length} aulas</p>
+   <a class="btn primary" href="#trilhas" data-open-trilha="${next.id}" style="align-self:flex-start">Continuar trilha</a></div>
+  <div class="card"><h3>Próximas mentorias</h3>${nb.length?nb.map(m=>`<div class="slot"><div class="date"><b>${m.d}</b>${m.m}</div><div style="flex:1;min-width:0"><b>${m.t}</b><div class="muted mono">${m.h}</div></div></div>`).join(""):`<p class="muted">Você ainda não reservou nenhuma.</p><a class="btn sm" href="#mentorias" style="align-self:flex-start">Ver agenda</a>`}</div>
+ </div>
+ <div><div class="s-head" style="margin-bottom:14px"><h3 style="font-size:20px">Recomendadas para você</h3><a class="btn sm" href="#solucoes">Catálogo completo</a></div>
+ <div class="grid g3">${SOLS.filter(s=>!S.saved.includes(s.id)).slice(0,3).map(solCard).join("")}</div></div>`}
+
+function aTrilhas(){const t=TRILHAS.find(x=>x.id===S.trilha);const d=S.done[t.id]||[];const pr=trilhaProg(t);
+ return `<div><span class="eyebrow">Trilhas</span><h1 style="margin-top:6px">Aprenda implementando</h1></div>
+ <div class="filters">${TRILHAS.map(x=>{const p=trilhaProg(x);return `<button class="pill ${x.id===S.trilha?"on":""}" data-trilha="${x.id}">${x.t} · ${p.pct}%</button>`}).join("")}</div>
+ <div class="split">
+  <div style="display:grid;gap:14px;min-width:0">
+   <div class="player"><button class="play" id="playBtn" aria-label="Reproduzir aula"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M6 3l13 8-13 8z" fill="var(--accent-ink)"/></svg></button>
+   <div class="cap"><span class="mono" style="opacity:.7">AULA ${S.aula+1} DE ${t.aulas.length}</span><div style="font-family:var(--f-display);font-size:20px;font-weight:700">${t.aulas[S.aula]}</div></div></div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="prevAula" ${S.aula===0?"disabled":""}>Aula anterior</button>
+   <button class="btn primary" id="doneAula">${d.includes(S.aula)?"Concluída ✓":"Marcar como concluída"}</button>
+   <button class="btn" id="nextAula" ${S.aula===t.aulas.length-1?"disabled":""}>Próxima aula</button></div>
+   <div class="card"><h3>Material de apoio</h3><p class="muted">Checklist da aula, modelo de prompt e planilha de cálculo de retorno. (No protótipo os arquivos são ilustrativos.)</p></div>
+  </div>
+  <div class="card"><div style="display:flex;justify-content:space-between"><h3>${t.t}</h3></div><div class="bar"><i style="width:${pr.pct}%"></i></div><p class="mono muted">${pr.n}/${pr.tot} concluídas · ${t.nivel}</p>
+   <div>${t.aulas.map((a,i)=>`<div class="lesson"><button class="check ${d.includes(i)?"done":""}" data-chk="${i}" aria-label="Concluir ${esc(a)}">${d.includes(i)?"✓":""}</button><a href="#trilhas" data-aula="${i}" style="text-decoration:none;flex:1;${i===S.aula?"font-weight:700":""}">${a}</a><span class="mono muted">${8+i*3} min</span></div>`).join("")}</div>
+   ${pr.pct===100?`<a class="btn primary" href="#perfil">Ver certificado</a>`:""}
+  </div>
+ </div>`}
+
+function aBiblioteca(){const l=SOLS.filter(s=>S.saved.includes(s.id));
+ return `<div><span class="eyebrow">Minhas soluções</span><h1 style="margin-top:6px">Soluções que você está implementando</h1></div>
+ ${l.length?`<div class="grid g3">${l.map(solCard).join("")}</div>`:`<div class="empty">Você ainda não salvou nenhuma solução. Abra uma no <a href="#solucoes">catálogo</a> e clique em “Salvar na minha biblioteca”.</div>`}`}
+
+function aMentorias(){return `<div><span class="eyebrow">Mentorias ao vivo</span><h1 style="margin-top:6px">Agenda de dezembro</h1><p class="muted" style="margin-top:6px">Reserve sua vaga. A gravação fica disponível em até 24h.</p></div>
+ <div class="card">${MENTORIAS.map((m,i)=>{const b=S.booked.includes(i),lock=m.plano&&m.plano!==S.user.plano;return `<div class="slot"><div style="display:flex;gap:14px;align-items:center;min-width:0;flex:1"><div class="date"><b>${m.d}</b>${m.m}</div><div style="min-width:0"><b>${m.t}</b><div class="muted mono">${m.h} · ${m.com} · ${m.vagas-(b?1:0)} vagas</div></div></div>
+ <div style="display:flex;gap:8px;align-items:center"><span class="chip ${m.tipo==="Individual"?"acc":"teal"}">${m.tipo}</span>${lock?`<span class="chip">Plano ${m.plano}</span>`:`<button class="btn sm ${b?"":"primary"}" data-book="${i}">${b?"Cancelar reserva":"Reservar vaga"}</button>`}</div></div>`}).join("")}</div>`}
+
+function aComunidade(){const tags=["Todos","Vendas","Estratégia","RH","Ferramentas"];const l=S.posts.filter(p=>S.postTag==="Todos"||p.tag===S.postTag);
+ return `<div><span class="eyebrow">Comunidade</span><h1 style="margin-top:6px">Troque com quem está implementando</h1></div>
+ <div class="split"><div style="display:grid;gap:14px;min-width:0">
+  <form class="card" id="postForm"><label for="postTxt" class="muted" style="font-size:13px;font-weight:600">Compartilhe um resultado ou peça ajuda</label>
+  <textarea id="postTxt" class="field" rows="3" placeholder="Ex.: Alguém já integrou o agente com o Pipedrive?" required></textarea>
+  <div style="display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap"><select id="postTag" class="field">${tags.slice(1).map(t=>`<option>${t}</option>`).join("")}</select><button class="btn primary" type="submit">Publicar</button></div></form>
+  <div class="filters" style="margin:0">${tags.map(t=>`<button class="pill ${t===S.postTag?"on":""}" data-ptag="${t}">${t}</button>`).join("")}</div>
+  ${l.map(p=>{const lk=S.liked.includes(p.id);return `<article class="card post"><div class="hd"><span class="av">${initials(p.a)}</span><div style="min-width:0"><b>${esc(p.a)}</b><div class="muted mono">${esc(p.c)} · ${p.ago}</div></div><span class="chip" style="margin-left:auto">${p.tag}</span></div><p>${esc(p.t)}</p>
+  <div class="act"><button class="btn sm" data-like="${p.id}" aria-pressed="${lk}">${lk?"♥":"♡"} ${p.l+(lk?1:0)}</button><button class="btn sm" data-reply="${p.id}">Responder</button></div></article>`}).join("")}
+ </div>
+ <aside style="display:grid;gap:14px"><div class="card"><h3>Grupos</h3>${["Comercial com IA","Atendimento e agentes","Finanças e dados","Gestão de pessoas"].map((g,i)=>`<div class="slot"><span>${g}</span><span class="mono muted">${[412,388,201,176][i]} membros</span></div>`).join("")}</div>
+ <div class="card"><h3>Regras da casa</h3><p class="muted">Compartilhe números reais, sem venda direta e sem expor dados de clientes.</p></div></aside></div>`}
+
+const BOT=[
+ [/whats|lead|vend|comercial/i,1,"t2","Para vendas, comece pelo Qualificador de leads no WhatsApp. Leva cerca de 3 horas para montar e costuma reduzir 40% do tempo do SDR.\n\nPróximo passo: assista à aula “Conectando o agente ao WhatsApp” e traga dúvidas na clínica de agentes do dia 02/12."],
+ [/atend|suporte|cliente|ticket|sac/i,2,"t2","Para atendimento, a Central de respostas com base de conhecimento é a mais indicada. Ela responde com base nos seus manuais e chama um humano quando não tem certeza.\n\nComece reunindo as 30 perguntas mais frequentes do último mês."],
+ [/financ|nota|concilia|contab|fechamento/i,4,"t3","No financeiro, a Conciliação de extratos e notas dá retorno rápido: em média 8 horas por semana economizadas. A trilha Automação sem código cobre tudo o que você vai precisar."],
+ [/rh|curr|contrat|vaga|onboard/i,5,"t1","Para RH, a Triagem de currículos é a mais simples de implementar (cerca de 2 horas). Defina antes os 5 critérios obrigatórios da vaga."],
+ [/marketing|post|conte|anúnc|anuncio|rede/i,3,"t3","Para marketing, a Fábrica de conteúdo para redes coloca 20 posts por semana no calendário com uma pessoa só."],
+ [/contrato|juríd|jurid/i,6,"t4","Para o jurídico, o Revisor de contratos com checklist destaca cláusulas de risco. É uma solução avançada: recomendo fazer com o apoio de um arquiteto na mentoria."],
+ [/começ|comec|primeiro|onde|não sei|nao sei/i,null,"t1","Uma boa regra: escolha um processo repetitivo, que acontece toda semana e que tenha um número fácil de medir. Me diga em qual área ele está (vendas, atendimento, financeiro, RH, marketing ou jurídico) e eu indico a solução."],
+];
+function botReply(q){for(const [re,sol,tr,txt] of BOT){if(re.test(q))return {txt,sol,tr}}return {txt:"Entendi. Para indicar a solução certa, me conte duas coisas: em qual área está o processo e quantas vezes por semana ele acontece.",sol:null,tr:null}}
+function aConsultor(){if(!S.chat)S.chat=[{b:1,t:`Olá, ${S.user.nome.split(" ")[0]}! Sou o Consultor IA da MatrixOS. Conte qual processo da sua empresa toma mais tempo hoje e eu indico a solução e a trilha certas.`}];
+ return `<div><span class="eyebrow">Consultor IA</span><h1 style="margin-top:6px">Diagnóstico do seu próximo projeto</h1><p class="demo-tag" style="margin-top:6px">PROTÓTIPO: respostas roteirizadas. Na versão final, conectado a um modelo de linguagem.</p></div>
+ <div class="card"><div class="chat" id="chat">${S.chat.map(m=>`<div class="msg ${m.b?"bot":"me"}">${esc(m.t)}${m.sol?`<div style="margin-top:10px"><button class="btn sm" data-sol="${m.sol}">Ver solução indicada</button></div>`:""}</div>`).join("")}</div>
+ <div class="sugs">${["Nosso comercial perde muitos leads no WhatsApp","Atendimento demora para responder","Fechamento financeiro é lento","Não sei por onde começar"].map(s=>`<button class="pill" data-sug="${esc(s)}">${s}</button>`).join("")}</div>
+ <form class="composer" id="chatForm"><input id="chatIn" placeholder="Descreva o processo…" aria-label="Mensagem para o Consultor IA" autocomplete="off"><button class="btn primary" type="submit">Enviar</button><button class="btn" type="button" id="chatReset">Limpar</button></form></div>`}
+
+function aPerfil(){const certs=TRILHAS.filter(t=>trilhaProg(t).pct===100);
+ return `<div><span class="eyebrow">Perfil</span><h1 style="margin-top:6px">${esc(S.user.nome)}</h1><p class="muted">${esc(S.user.empresa)} · Plano ${esc(S.user.plano)}</p></div>
+ <div class="grid g2"><div class="card"><h3>Seu plano</h3><p>Plano <b>${esc(S.user.plano)}</b> · renovação em 26/11/2027</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn sm" href="#planos">Trocar de plano</a><button class="btn sm" id="logout">Sair</button></div></div>
+ <div class="card"><h3>Progresso por trilha</h3>${TRILHAS.map(t=>{const p=trilhaProg(t);return `<div style="display:grid;gap:4px"><div style="display:flex;justify-content:space-between;gap:8px"><span>${t.t}</span><span class="mono muted">${p.pct}%</span></div><div class="bar"><i style="width:${p.pct}%"></i></div></div>`}).join("")}</div></div>
+ <h3 style="font-size:20px">Certificados</h3>
+ ${certs.length?`<div class="grid g2">${certs.map(t=>`<div class="cert"><span class="eyebrow">Certificado de conclusão</span><h2>${t.t}</h2><p>Concedido a <b>${esc(S.user.nome)}</b></p><p class="mono muted">${t.aulas.length} aulas · MatrixOS · ${new Date().toLocaleDateString("pt-BR")}</p></div>`).join("")}</div>`:`<div class="empty">Conclua todas as aulas de uma trilha para liberar o certificado.</div>`}`}
+
+/* ================= MODAL DE SOLUÇÃO ================= */
+function openSol(id){const s=SOLS.find(x=>x.id==id);const sv=S.saved.includes(s.id);
+ $("#layer").innerHTML=`<div class="modal" id="mod"><div class="box" role="dialog" aria-modal="true" aria-labelledby="mt"><button class="x" data-close aria-label="Fechar">✕</button>
+ <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip teal">${s.a}</span><span class="chip">${s.tipo}</span><span class="chip">${s.n}</span></div>
+ <h2 id="mt" style="font-size:26px">${esc(s.t)}</h2><p class="muted">${esc(s.d)}</p>
+ <div class="grid g2"><div class="card" style="padding:14px"><span class="mono muted">TEMPO ESTIMADO</span><b style="font-size:20px">~${s.h} horas</b></div><div class="card" style="padding:14px"><span class="mono muted">RESULTADO TÍPICO</span><b style="font-size:20px">${s.r}</b></div></div>
+ <div><span class="mono muted">FERRAMENTAS</span><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">${s.st.map(x=>`<span class="chip">${x}</span>`).join("")}</div></div>
+ <div><span class="mono muted">O QUE VEM NA SOLUÇÃO</span><ul style="margin:6px 0 0;padding-left:18px;color:var(--muted)"><li>Vídeo passo a passo</li><li>Fluxo pronto para importar</li><li>Prompts testados</li><li>Checklist de LGPD e de go-live</li></ul></div>
+ ${S.user?`<button class="btn primary" data-save="${s.id}" style="justify-content:center">${sv?"Remover da minha biblioteca":"Salvar na minha biblioteca"}</button>`:`<a class="btn primary" href="#entrar" data-close style="justify-content:center">Entrar para acessar a solução</a>`}
+ </div></div>`;$("#mod .x").focus()}
+function closeModal(){$("#layer").innerHTML=""}
+
+/* ================= ROTEADOR ================= */
+const PUB={home:pHome,solucoes:pSolucoes,cases:pCases,planos:pPlanos,guia:pGuia,entrar:pEntrar};
+const APP={painel:aPainel,trilhas:aTrilhas,biblioteca:aBiblioteca,mentorias:aMentorias,comunidade:aComunidade,consultor:aConsultor,perfil:aPerfil};
+function route(){return (location.hash||"#home").slice(1)||"home"}
+function render(keepScroll){let r=route();
+ if(APP[r]&&!S.user){r="entrar"}
+ if(r==="entrar"&&S.user){r="painel"}
+ const v=$("#view");
+ if(APP[r])v.innerHTML=shell(r,APP[r]());else v.innerHTML=(PUB[r]||pHome)();
+ document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.r===r));
+ $("#topActions").innerHTML=S.user?`<a class="btn sm hide-m" href="#consultor">Consultor IA</a><a class="btn sm primary" href="#painel">Minha área</a>`:`<a class="btn sm hide-m" href="#entrar">Entrar</a><a class="btn sm primary" href="#entrar">Teste grátis</a>`;
+ $("#nav").classList.remove("open");$("#burger").setAttribute("aria-expanded","false");
+ if(!keepScroll)window.scrollTo(0,0);
+ const c=$("#chat");if(c)c.scrollTop=c.scrollHeight;
+}
+window.addEventListener("hashchange",()=>render());
+
+/* ================= EVENTOS ================= */
+document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-sol]");if(!t)return;const d=t.dataset;
+ if(t.id==="burger"){const n=$("#nav");n.classList.toggle("open");t.setAttribute("aria-expanded",n.classList.contains("open"));return}
+ if("close" in d||t.id==="mod"){closeModal();return}
+ if(d.save){const id=+d.save;S.saved=S.saved.includes(id)?S.saved.filter(x=>x!==id):[...S.saved,id];save("saved");toast(S.saved.includes(id)?"Solução salva na biblioteca":"Solução removida");closeModal();render(true);return}
+ if(d.sol){openSol(d.sol);return}
+ if(d.cycle){S.annual=d.cycle==="a";render(true);return}
+ if(d.assinar){if(S.user){S.user.plano=d.assinar;save("user");toast("Plano alterado para "+d.assinar);location.hash="#perfil"}else{location.hash="#entrar";setTimeout(()=>{const s=$("#lgPlan");if(s)s.value=d.assinar},0)}return}
+ if(d.area){S.solArea=d.area;render(true);return}
+ if(d.carea){S.caseArea=d.carea;render(true);return}
+ if(d.trilha){S.trilha=d.trilha;S.aula=0;render(true);return}
+ if(d.openTrilha){S.trilha=d.openTrilha;const dn=S.done[d.openTrilha]||[];const t=TRILHAS.find(x=>x.id===d.openTrilha);S.aula=Math.max(0,t.aulas.findIndex((_,i)=>!dn.includes(i)));return}
+ if(d.aula){e.preventDefault();S.aula=+d.aula;render(true);return}
+ if(d.chk!==undefined||t.id==="doneAula"){const i=d.chk!==undefined?+d.chk:S.aula;const arr=S.done[S.trilha]||[];S.done[S.trilha]=arr.includes(i)?arr.filter(x=>x!==i):[...arr,i];save("done");
+   const t2=TRILHAS.find(x=>x.id===S.trilha);if(S.done[S.trilha].length===t2.aulas.length)toast("Trilha concluída! Certificado liberado no perfil");render(true);return}
+ if(t.id==="prevAula"){S.aula--;render(true);return}
+ if(t.id==="nextAula"){S.aula++;render(true);return}
+ if(t.id==="playBtn"){toast("Prévia: o vídeo da aula entra aqui");return}
+ if(d.book){const i=+d.book;const had=S.booked.includes(i);S.booked=had?S.booked.filter(x=>x!==i):[...S.booked,i];save("booked");toast(had?"Reserva cancelada":"Vaga reservada. Lembrete 1h antes.");render(true);return}
+ if(d.like){const id=+d.like;S.liked=S.liked.includes(id)?S.liked.filter(x=>x!==id):[...S.liked,id];save("liked");render(true);return}
+ if(d.reply){const ta=$("#postTxt");const p=S.posts.find(x=>x.id==d.reply);ta.value="@"+p.a.split(" ")[0]+" ";ta.focus();return}
+ if(d.ptag){S.postTag=d.ptag;render(true);return}
+ if(d.sug){sendChat(d.sug);return}
+ if(t.id==="chatReset"){S.chat=null;save("chat");render(true);return}
+ if(t.id==="logout"){S.user=null;save("user");location.hash="#home";render();return}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="Enter"){const c=e.target.closest&&e.target.closest(".card.click");if(c&&c.dataset.sol)openSol(c.dataset.sol)}});
+document.addEventListener("input",e=>{if(e.target.id==="solQ"){S.solQ=e.target.value;const pos=e.target.selectionStart;render(true);const i=$("#solQ");i.focus();i.setSelectionRange(pos,pos)}});
+document.addEventListener("change",e=>{if(e.target.id==="solTipo"){S.solTipo=e.target.value;render(true)}});
+function sendChat(q){q=q.trim();if(!q)return;S.chat.push({b:0,t:q});const r=botReply(q);S.chat.push({b:1,t:r.txt,sol:r.sol});save("chat");render(true)}
+document.addEventListener("submit",e=>{e.preventDefault();const f=e.target;
+ if(f.id==="loginForm"){S.user={nome:$("#lgName").value.trim()||"Membro",empresa:$("#lgCo").value.trim()||"Sua empresa",plano:$("#lgPlan").value};save("user");toast("Bem-vindo à MatrixOS");location.hash="#painel"}
+ if(f.id==="postForm"){const tx=$("#postTxt").value.trim();if(!tx)return;S.posts.unshift({id:Date.now(),a:S.user.nome,c:S.user.empresa,t:tx,l:0,tag:$("#postTag").value,ago:"agora"});save("posts");toast("Publicado na comunidade");render(true)}
+ if(f.id==="chatForm"){sendChat($("#chatIn").value)}
+});
+document.addEventListener("click",e=>{if(e.target.id==="mod")closeModal()});
+render();
+</script>
