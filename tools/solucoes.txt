@@ -1,0 +1,209 @@
+# area|titulo|tipo|nivel|horas|ferramentas(,)|resultado|descricao
+## Vendas (60)
+Vendas|SDR de WhatsApp que qualifica leads|Agente|Iniciante|3|WhatsApp API,n8n,CRM|-40% tempo do SDR|Conversa com o lead, faz as perguntas de qualificação e entrega no CRM só quem tem perfil.
+Vendas|SDR de voz para retorno de formulários|Agente|Avançado|10|Voz IA,Telefonia,CRM|Retorno em menos de 5 min|Liga para quem preencheu o formulário, qualifica e agenda reunião na agenda do vendedor.
+Vendas|Follow-up automático pós-proposta|Automação|Iniciante|2|Transcrição,CRM,E-mail|+18% propostas fechadas|Envia mensagens personalizadas com base no que foi dito na reunião.
+Vendas|Resumo de reunião direto no CRM|Automação|Iniciante|2|Transcrição,LLM,CRM|10 min poupados por reunião|Transcreve a call, extrai dores, objeções e próximos passos e preenche o negócio no CRM.
+Vendas|Roleplay de vendas por voz|Ferramenta|Intermediário|5|Voz IA,LLM|Rampa de novos vendedores 40% menor|Simula clientes difíceis para o vendedor treinar pitch e objeções, com nota no final.
+Vendas|Coach de ligações em tempo real|Agente|Avançado|12|Transcrição,LLM,Telefonia|+12% conversão em calls|Sugere perguntas e respostas para objeções enquanto o vendedor está na ligação.
+Vendas|Prospecção com lista enriquecida|Automação|Intermediário|5|Enriquecimento,Planilha,LLM|3x mais contatos qualificados|Monta listas de empresas do perfil ideal e enriquece com cargo, porte e sinais de compra.
+Vendas|Cadência de e-mail frio personalizada|Automação|Intermediário|4|E-mail,LLM,CRM|+25% taxa de resposta|Escreve a primeira linha de cada e-mail a partir do site e das notícias do lead.
+Vendas|Playbook comercial gerado por IA|Ferramenta|Iniciante|3|LLM,Docs|Playbook pronto em 1 dia|Transforma gravações das melhores calls em um playbook com roteiro, perguntas e objeções.
+Vendas|Análise de calls perdidas|Análise|Intermediário|4|Transcrição,LLM,BI|Motivos de perda mapeados|Lê as calls de negócios perdidos e agrupa os motivos reais de perda.
+Vendas|Previsão de fechamento do funil|Análise|Avançado|8|CRM,Python,BI|Forecast com erro abaixo de 10%|Estima a chance de cada negócio fechar a partir do histórico do CRM.
+Vendas|Reativação de base inativa|Automação|Iniciante|3|WhatsApp API,CRM,LLM|+9% receita com base antiga|Seleciona clientes parados e envia ofertas com base no que eles já compraram.
+Vendas|Gerador de propostas comerciais|Ferramenta|Iniciante|2|LLM,Docs,CRM|Proposta em 10 minutos|Monta a proposta com escopo, preço e cases a partir dos dados do negócio.
+Vendas|Configurador de orçamento técnico|Ferramenta|Intermediário|6|Formulário,LLM,Planilha|Orçamentos 5x mais rápidos|Faz as perguntas técnicas certas e calcula o orçamento com a sua tabela de preços.
+Vendas|Agente de agendamento de demonstrações|Agente|Iniciante|2|Agenda,WhatsApp API|-60% no-show|Agenda, confirma e lembra o lead da demonstração, e remarca quando ele pede.
+Vendas|Qualificação de leads de eventos|Automação|Iniciante|2|Formulário,LLM,CRM|Leads trabalhados no mesmo dia|Lê os cartões e anotações do evento e cria os leads já priorizados.
+Vendas|CRM para clínicas|Ferramenta|Intermediário|6|CRM,WhatsApp API|+20% agendamentos|Funil pronto para clínicas com etapas de avaliação, orçamento e retorno.
+Vendas|CRM para imobiliárias|Ferramenta|Intermediário|6|CRM,WhatsApp API,Portais|Leads de portal respondidos em 2 min|Recebe leads de portais, qualifica e distribui para o corretor certo.
+Vendas|CRM para escolas e cursos|Ferramenta|Intermediário|6|CRM,WhatsApp API|+15% matrículas|Funil de captação de alunos com visitas, matrícula e rematrícula.
+Vendas|CRM para concessionárias|Ferramenta|Intermediário|6|CRM,WhatsApp API|Test drives agendados automaticamente|Funil com test drive, avaliação de usado e financiamento.
+Vendas|CRM para agências|Ferramenta|Intermediário|5|CRM,Docs|Propostas acompanhadas de ponta a ponta|Funil de novos clientes com briefing, proposta e onboarding.
+Vendas|CRM para indústria B2B|Ferramenta|Avançado|8|CRM,ERP|Recompra prevista por cliente|Funil com representantes, pedidos recorrentes e alertas de recompra.
+Vendas|Agente de pós-venda e indicação|Agente|Iniciante|3|WhatsApp API,CRM|+30% indicações|Pergunta a satisfação depois da entrega e pede indicação a quem está satisfeito.
+Vendas|Cross-sell por histórico de compras|Análise|Intermediário|5|ERP,Python,CRM|+11% ticket médio|Sugere o próximo produto para cada cliente com base em quem comprou parecido.
+Vendas|Precificação dinâmica de propostas|Análise|Avançado|9|Planilha,Python,CRM|+4 p.p. de margem|Sugere desconto máximo por negócio a partir do histórico de fechamento.
+Vendas|Briefing de conta antes da reunião|Automação|Iniciante|2|LLM,Busca web,CRM|Vendedor chega preparado|Gera um resumo da empresa, notícias recentes e histórico com vocês.
+Vendas|Detector de sinais de compra|Automação|Intermediário|5|Busca web,LLM,Slack|Abordagem no momento certo|Avisa quando uma conta-alvo abre vagas, recebe investimento ou muda de diretoria.
+Vendas|Assistente de negociação|Agente|Intermediário|4|LLM,Docs|Respostas a objeções em segundos|Sugere contrapropostas e argumentos para cada objeção de preço.
+Vendas|Treinamento de produto para vendedores|Ferramenta|Iniciante|3|RAG,LLM|Dúvidas técnicas respondidas na hora|Responde dúvidas de produto com base no catálogo e nas fichas técnicas.
+Vendas|Ranking de leads por propensão|Análise|Avançado|8|CRM,Python|Time foca nos 20% que fecham|Dá uma nota para cada lead com base no comportamento dos que já compraram.
+Vendas|Distribuição inteligente de leads|Automação|Intermediário|4|CRM,n8n|Lead certo para o vendedor certo|Distribui leads por região, segmento e taxa de conversão do vendedor.
+Vendas|Monitor de metas no WhatsApp|Automação|Iniciante|2|CRM,WhatsApp API|Time acompanha a meta diariamente|Envia ao vendedor e ao gestor a posição da meta todo fim de dia.
+Vendas|Análise de concorrentes em propostas|Análise|Intermediário|4|Busca web,LLM|Argumentos contra cada concorrente|Compara a sua oferta com a do concorrente citado pelo lead.
+Vendas|Vendedor virtual para e-commerce|Agente|Intermediário|6|Chat,Catálogo,LLM|+8% conversão no site|Tira dúvidas sobre produtos e recomenda opções no chat da loja.
+Vendas|Recuperação de carrinho conversacional|Automação|Iniciante|3|WhatsApp API,E-commerce|+14% carrinhos recuperados|Puxa conversa com quem abandonou o carrinho e resolve a objeção.
+Vendas|Catálogo no WhatsApp com pedido|Agente|Intermediário|5|WhatsApp API,ERP|Pedidos sem atendente|Mostra o catálogo, monta o pedido e envia para o ERP.
+Vendas|Atendimento de representantes|Agente|Intermediário|5|WhatsApp API,ERP|Representante consulta estoque sozinho|Responde a representantes sobre estoque, preço e status de pedido.
+Vendas|Gerador de cases de clientes|Ferramenta|Iniciante|2|Transcrição,LLM|Case publicado em 1 dia|Entrevista o cliente e transforma a conversa em case com números.
+Vendas|Mapa de contas estratégicas|Análise|Intermediário|5|CRM,LLM|Plano de expansão por conta|Mapeia decisores, produtos usados e oportunidades em cada conta grande.
+Vendas|Qualificação de licitações|Automação|Avançado|8|Busca web,LLM,Planilha|Só licitações com chance de ganhar|Lê editais publicados e diz quais combinam com a empresa e por quê.
+Vendas|Leitor de editais|Ferramenta|Intermediário|5|OCR,LLM|Checklist do edital em minutos|Extrai prazos, documentos exigidos e critérios de um edital.
+Vendas|Agente de renovação de contratos|Agente|Intermediário|4|CRM,E-mail,LLM|-20% churn na renovação|Começa a conversa de renovação 60 dias antes e trata objeções.
+Vendas|Calculadora de ROI para o cliente|Ferramenta|Iniciante|3|Formulário,Planilha|Ciclo de venda mais curto|Mostra ao lead o retorno esperado com os números dele.
+Vendas|Pesquisa de perda com o lead|Automação|Iniciante|2|E-mail,Formulário,LLM|Motivos de perda direto da fonte|Pergunta ao lead perdido por que não fechou e resume as respostas.
+Vendas|Auditoria de qualidade do CRM|Análise|Iniciante|2|CRM,LLM|CRM limpo e confiável|Encontra negócios parados, duplicados e sem próximo passo.
+Vendas|Sequência de LinkedIn assistida|Automação|Intermediário|4|LinkedIn,LLM,Planilha|+20% conexões aceitas|Sugere mensagens de conexão e de follow-up personalizadas.
+Vendas|Agente de inside sales para SaaS|Agente|Avançado|10|Chat,CRM,LLM|Trial convertido sem vendedor|Acompanha usuários em teste e oferece ajuda no momento certo.
+Vendas|Onboarding comercial de clientes|Automação|Iniciante|3|CRM,E-mail|Passagem de bastão sem perder informação|Passa os dados do negócio ganho para o time de implantação.
+Vendas|Simulador de financiamento no chat|Ferramenta|Intermediário|4|WhatsApp API,Planilha|Lead chega com crédito simulado|Simula parcelas e envia a proposta de financiamento ao lead.
+Vendas|Vendas por áudio no WhatsApp|Agente|Avançado|8|Voz IA,WhatsApp API|Atende quem prefere mandar áudio|Entende áudios do cliente e responde em texto ou voz.
+Vendas|Gestão de comissões|Automação|Intermediário|5|ERP,Planilha|Comissão calculada sem erro|Calcula comissões por regra e envia o extrato a cada vendedor.
+Vendas|Análise de performance por vendedor|Análise|Intermediário|4|CRM,BI,LLM|Plano de desenvolvimento por vendedor|Compara funil, ciclo e ticket de cada vendedor e sugere melhorias.
+Vendas|Agente de reengajamento de leads frios|Agente|Iniciante|3|E-mail,WhatsApp API,CRM|+6% leads reabertos|Retoma contato com leads antigos com novidades relevantes.
+Vendas|Gerador de scripts de ligação|Ferramenta|Iniciante|1|LLM|Script por segmento em minutos|Cria roteiro de ligação por segmento e cargo do decisor.
+Vendas|Mapeamento de ICP com dados|Análise|Intermediário|5|CRM,Python,LLM|ICP baseado em quem realmente compra|Descobre o perfil dos seus melhores clientes pelos dados.
+Vendas|Assistente de visitas de campo|Agente|Intermediário|5|App,Agenda,CRM|Rota e relatório sem papel|Planeja rotas e transforma o áudio pós-visita em relatório.
+Vendas|Feedback automático de calls|Análise|Intermediário|4|Transcrição,LLM|Feedback toda semana para o time|Avalia cada call em escuta, perguntas e próximos passos.
+Vendas|Alertas de risco em negócios|Automação|Intermediário|3|CRM,Slack|Menos negócios esquecidos|Avisa quando um negócio grande fica parado ou o lead some.
+Vendas|Gerador de ofertas sazonais|Ferramenta|Iniciante|2|LLM,ERP|Campanhas prontas para cada data|Sugere ofertas e mensagens para datas comerciais com base no estoque.
+Vendas|Portal do cliente com IA|Agente|Avançado|12|Web,RAG,ERP|-50% pedidos de segunda via|Cliente consulta pedidos, boletos e notas sem falar com ninguém.
+## Marketing (30)
+Marketing|Fábrica de conteúdo para redes|Automação|Iniciante|2|Planilha,LLM,Agendador|20 posts por semana com 1 pessoa|A partir de um tema, gera roteiro, legenda e variações para 4 redes.
+Marketing|Gerador de anúncios com teste A/B|Automação|Intermediário|4|Meta Ads,Imagem IA,Make|-22% custo por lead|Cria variações de criativo e pausa as piores automaticamente.
+Marketing|Artigos de blog para SEO|Automação|Intermediário|4|LLM,CMS,SEO|+60% tráfego orgânico em 6 meses|Pesquisa palavras-chave, escreve e otimiza artigos para revisão.
+Marketing|Roteiros de vídeos curtos|Ferramenta|Iniciante|1|LLM|30 roteiros por mês|Cria ganchos e roteiros de Reels e TikTok a partir de um tema.
+Marketing|Cortes automáticos de vídeos longos|Automação|Iniciante|2|Vídeo IA|10 cortes por live|Encontra os melhores trechos de lives e podcasts e legenda os cortes.
+Marketing|Newsletter semanal automática|Automação|Iniciante|2|LLM,E-mail|Newsletter sem esforço|Junta os conteúdos da semana e escreve a newsletter no tom da marca.
+Marketing|Monitor de menções da marca|Automação|Intermediário|3|Busca web,LLM,Slack|Crise detectada no primeiro dia|Acompanha menções e alerta quando o sentimento piora.
+Marketing|Análise de campanhas em linguagem natural|Análise|Intermediário|4|Ads,BI,LLM|Relatório semanal em 5 min|Responde perguntas sobre as campanhas com os dados de todas as plataformas.
+Marketing|Personas com dados reais|Análise|Iniciante|3|CRM,Pesquisa,LLM|Personas baseadas em clientes reais|Cria personas a partir de entrevistas, avaliações e dados do CRM.
+Marketing|Gerador de landing pages|Ferramenta|Intermediário|4|No-code,LLM|Página no ar em 1 dia|Gera textos e estrutura de landing pages para cada oferta.
+Marketing|Imagens de produto com IA|Ferramenta|Iniciante|2|Imagem IA|-80% custo com fotos|Cria fotos de produto em cenários a partir de uma foto simples.
+Marketing|Calendário editorial inteligente|Ferramenta|Iniciante|2|Planilha,LLM|Mês planejado em 1 hora|Planeja temas do mês com datas, formatos e objetivos.
+Marketing|Respostas a comentários e DMs|Agente|Iniciante|3|Instagram API,LLM|Nenhum comentário sem resposta|Responde comentários e direct no tom da marca e encaminha leads.
+Marketing|Pesquisa de concorrentes|Análise|Iniciante|2|Busca web,LLM|Mapa da concorrência em 1 dia|Resume posicionamento, ofertas e anúncios dos concorrentes.
+Marketing|E-mail marketing segmentado|Automação|Intermediário|4|E-mail,CRM,LLM|+30% abertura|Cria versões do e-mail para cada segmento da base.
+Marketing|Gerador de iscas digitais|Ferramenta|Iniciante|3|LLM,Docs|E-books e checklists em horas|Cria materiais ricos para captar leads a partir do seu conhecimento.
+Marketing|Atribuição de vendas por canal|Análise|Avançado|8|CRM,Ads,Python|Verba no canal que vende|Mostra quais canais geram vendas, não só leads.
+Marketing|Tradução e adaptação de campanhas|Automação|Iniciante|2|LLM|Campanhas em 3 idiomas|Adapta textos para outros idiomas e regiões mantendo o tom.
+Marketing|Podcast com roteiros e resumos|Automação|Intermediário|3|Transcrição,LLM|Episódio vira 8 conteúdos|Gera pauta, resumo, posts e newsletter de cada episódio.
+Marketing|Avaliações e reputação online|Agente|Iniciante|2|Google,LLM|Nota média +0,3|Responde avaliações e pede avaliação a clientes satisfeitos.
+Marketing|Gestão de influenciadores|Ferramenta|Intermediário|4|Planilha,LLM|Influenciadores certos por campanha|Avalia perfis, gera briefings e acompanha entregas.
+Marketing|Copy para anúncios por público|Ferramenta|Iniciante|1|LLM|50 variações em minutos|Escreve variações de anúncio por público e dor.
+Marketing|Chatbot de captação no site|Agente|Iniciante|3|Chat,CRM|+35% conversão do site|Conversa com visitantes, entende o interesse e captura o contato.
+Marketing|Relatório mensal para diretoria|Automação|Intermediário|3|BI,LLM|Relatório pronto no dia 1|Compila resultados do mês com análise e próximos passos.
+Marketing|Otimização de fichas de produto|Automação|Iniciante|2|E-commerce,LLM|+10% conversão por produto|Reescreve títulos e descrições para busca e conversão.
+Marketing|Pesquisa de satisfação NPS com análise|Análise|Iniciante|2|Formulário,LLM|Temas do NPS em minutos|Envia o NPS e agrupa os comentários por tema.
+Marketing|Webinars com follow-up automático|Automação|Intermediário|4|Webinar,E-mail,CRM|+20% leads do webinar viram reunião|Segmenta participantes e envia o follow-up certo.
+Marketing|Branding: guia de voz da marca|Ferramenta|Iniciante|2|LLM,Docs|Toda a equipe escreve no mesmo tom|Cria o guia de tom de voz e um revisor de textos.
+Marketing|Vídeos com avatar para treinamentos e anúncios|Ferramenta|Intermediário|3|Vídeo IA,Voz IA|Vídeos sem gravação|Gera vídeos com apresentador virtual a partir de um roteiro.
+Marketing|Painel de marketing unificado|Análise|Intermediário|5|Ads,CRM,BI|Todos os números em uma tela|Junta dados de anúncios, site e CRM em um painel.
+## Atendimento e CS (25)
+Atendimento e CS|Central de respostas com base de conhecimento|Agente|Intermediário|6|RAG,Helpdesk,Make|62% resolvidos sem humano|Responde clientes com base em manuais e políticas e escala quando não tem certeza.
+Atendimento e CS|Agente de atendimento no WhatsApp|Agente|Iniciante|4|WhatsApp API,RAG|Atendimento 24h|Responde dúvidas frequentes, consulta pedidos e abre chamados.
+Atendimento e CS|Triagem e roteamento de tickets|Automação|Iniciante|2|Helpdesk,LLM|-35% tempo de primeira resposta|Classifica tickets por tema e urgência e envia para a fila certa.
+Atendimento e CS|Sugestão de resposta para atendentes|Ferramenta|Iniciante|2|Helpdesk,LLM|Atendente 2x mais rápido|Sugere a resposta com base no histórico e na base de conhecimento.
+Atendimento e CS|Base de conhecimento que se escreve sozinha|Automação|Intermediário|4|Helpdesk,LLM,Docs|Base sempre atualizada|Cria artigos a partir de tickets resolvidos.
+Atendimento e CS|Concierge de hotel e eventos|Agente|Intermediário|5|WhatsApp API,RAG|Hóspede atendido em segundos|Responde hóspedes sobre horários, serviços e reservas.
+Atendimento e CS|Confirmação e reagendamento de consultas|Agente|Iniciante|3|WhatsApp API,Agenda|-48% faltas|Confirma consultas, reagenda e preenche vagas que abriram.
+Atendimento e CS|Score de saúde do cliente|Análise|Avançado|8|CRM,Uso do produto,Python|Churn previsto com 60 dias|Calcula o risco de cancelamento de cada cliente.
+Atendimento e CS|Playbook de retenção automático|Automação|Intermediário|5|CRM,E-mail,LLM|-15% churn|Dispara ações de retenção quando o cliente mostra sinais de risco.
+Atendimento e CS|Análise de sentimento dos atendimentos|Análise|Iniciante|3|Helpdesk,LLM|Problemas recorrentes visíveis|Lê conversas e mostra os temas que mais irritam clientes.
+Atendimento e CS|Atendimento por voz na central telefônica|Agente|Avançado|12|Voz IA,Telefonia|-50% fila no telefone|Atende ligações, resolve o simples e transfere o complexo.
+Atendimento e CS|Onboarding de clientes guiado|Agente|Intermediário|5|E-mail,Chat,LLM|Cliente ativo em metade do tempo|Acompanha o cliente nos primeiros 30 dias com tarefas e dicas.
+Atendimento e CS|Resumo do cliente para o atendente|Automação|Iniciante|2|CRM,Helpdesk,LLM|Contexto completo em 1 tela|Mostra histórico, compras e problemas antes do atendimento.
+Atendimento e CS|Avaliação de qualidade do atendimento|Análise|Intermediário|4|Helpdesk,LLM|100% dos atendimentos avaliados|Dá nota para cada atendimento segundo o seu padrão.
+Atendimento e CS|Agente de trocas e devoluções|Agente|Intermediário|5|E-commerce,WhatsApp API|Troca resolvida sem atendente|Verifica a política, gera a etiqueta e acompanha a devolução.
+Atendimento e CS|Rastreio de pedidos conversacional|Agente|Iniciante|2|Logística,WhatsApp API|-40% contatos sobre entrega|Informa status e prazo de entrega quando o cliente pergunta.
+Atendimento e CS|Pesquisa pós-atendimento com ação|Automação|Iniciante|2|Formulário,Helpdesk|Detratores recontatados em 24h|Envia CSAT e abre tarefa quando a nota é baixa.
+Atendimento e CS|Tradução em tempo real no atendimento|Ferramenta|Iniciante|1|LLM,Helpdesk|Atende em qualquer idioma|Traduz mensagens do cliente e do atendente na hora.
+Atendimento e CS|FAQ dinâmico no site|Agente|Iniciante|2|Chat,RAG|-25% tickets|Responde perguntas no site com base no conteúdo publicado.
+Atendimento e CS|Cobrança amigável no WhatsApp|Agente|Intermediário|4|WhatsApp API,ERP|+18% recuperação|Lembra vencimentos, envia segunda via e negocia dentro das regras.
+Atendimento e CS|Gestão de reclamações em sites de reputação|Automação|Intermediário|3|Busca web,LLM|Resposta em menos de 24h|Monitora reclamações públicas e sugere resposta.
+Atendimento e CS|Agente de suporte técnico nível 1|Agente|Avançado|10|RAG,Helpdesk|Nível 2 com menos chamados|Faz o diagnóstico guiado de problemas técnicos.
+Atendimento e CS|Relatório de voz do cliente|Análise|Intermediário|4|Helpdesk,CRM,LLM|Produto recebe o feedback certo|Resume pedidos e reclamações para o time de produto.
+Atendimento e CS|Agente de agendamento de serviços|Agente|Iniciante|3|Agenda,WhatsApp API|Agenda cheia sem secretária|Agenda serviços e técnicos de acordo com região e disponibilidade.
+Atendimento e CS|Comunidade de clientes com moderação IA|Ferramenta|Intermediário|5|Comunidade,LLM|Clientes ajudando clientes|Modera, responde e destaca as melhores respostas da comunidade.
+## Operações (20)
+Operações|Previsão de ruptura de estoque|Análise|Avançado|10|Python,BI,ERP|-30% rupturas|Cruza vendas, sazonalidade e prazos para avisar antes de faltar produto.
+Operações|Leitura automática de documentos|Automação|Intermediário|4|OCR,LLM,ERP|Digitação eliminada|Extrai dados de notas, pedidos e formulários direto para o sistema.
+Operações|Assistente de procedimentos internos|Agente|Iniciante|3|RAG,Teams|-50% dúvidas operacionais|Responde como fazer cada processo com base nos POPs.
+Operações|Planejamento de compras|Análise|Avançado|8|ERP,Python|-15% capital em estoque|Sugere quanto e quando comprar de cada fornecedor.
+Operações|Roteirização de entregas|Ferramenta|Intermediário|5|Mapas,Planilha|-18% quilometragem|Monta rotas por janela de entrega e capacidade do veículo.
+Operações|Inspeção de qualidade por imagem|Análise|Avançado|12|Visão computacional,Câmera|Defeitos detectados na linha|Identifica defeitos visuais em produtos com fotos.
+Operações|Manutenção preditiva simples|Análise|Avançado|10|Sensores,Python|-25% paradas não planejadas|Avisa quando uma máquina mostra sinais de falha.
+Operações|Atas e tarefas de reunião|Automação|Iniciante|1|Transcrição,LLM,Tarefas|Nenhuma tarefa esquecida|Transcreve reuniões, gera a ata e cria tarefas para os responsáveis.
+Operações|Cotação com fornecedores|Automação|Intermediário|4|E-mail,LLM,Planilha|Cotações comparadas em minutos|Envia pedidos de cotação e compara as respostas.
+Operações|Gestão de projetos com IA|Ferramenta|Iniciante|2|Tarefas,LLM|Status sem reunião|Resume o andamento dos projetos e aponta atrasos.
+Operações|Plataforma de cursos internos|Ferramenta|Intermediário|6|LMS,Vídeo IA|Treinamento sem sala de aula|Cria trilhas de treinamento a partir dos seus materiais.
+Operações|Controle de frota|Análise|Intermediário|5|Rastreador,BI|-10% combustível|Analisa rotas, consumo e manutenção dos veículos.
+Operações|Gestão de documentos e contratos|Ferramenta|Iniciante|3|Drive,LLM|Qualquer documento encontrado em segundos|Organiza e busca documentos da empresa em linguagem natural.
+Operações|Escala de trabalho otimizada|Ferramenta|Intermediário|5|Planilha,Python|Escala pronta em minutos|Monta escalas respeitando regras, folgas e demanda.
+Operações|Checklist de campo por áudio|Automação|Iniciante|2|App,Transcrição|Relatórios de campo completos|O técnico fala e o checklist é preenchido.
+Operações|Painel operacional em tempo real|Análise|Intermediário|5|ERP,BI|Gargalos visíveis na hora|Mostra a produção, filas e atrasos em um painel.
+Operações|Gestão de chamados internos|Automação|Iniciante|3|Formulário,Tarefas,LLM|Chamados internos com prazo|Classifica e distribui pedidos internos para cada área.
+Operações|Assistente de segurança do trabalho|Agente|Intermediário|4|RAG,App|Normas consultadas no campo|Responde sobre NRs e procedimentos de segurança.
+Operações|Controle de qualidade de fornecedores|Análise|Intermediário|4|ERP,LLM|Fornecedores avaliados todo mês|Avalia prazos, qualidade e preço de cada fornecedor.
+Operações|Gêmeo de processos|Análise|Avançado|10|Logs,Python,BI|Gargalos com números|Mapeia como os processos realmente acontecem a partir dos sistemas.
+## Modelos de IA (15)
+Modelos de IA|Assistente interno com dados da empresa|Agente|Intermediário|6|RAG,LLM|Toda a empresa com um assistente|Chat interno que responde com documentos da empresa e respeita permissões.
+Modelos de IA|Biblioteca de prompts da empresa|Ferramenta|Iniciante|1|Docs,LLM|Prompts testados para cada área|Coleção organizada de prompts aprovados pela equipe.
+Modelos de IA|Agente CEO de bolso|Agente|Intermediário|5|LLM,BI,Docs|Decisões com dados à mão|Assistente que responde ao dono sobre números e prioridades da empresa.
+Modelos de IA|Agente CFO|Agente|Avançado|8|LLM,ERP,BI|Análise financeira sob demanda|Lê o financeiro e explica fluxo de caixa, margens e riscos.
+Modelos de IA|Agente CMO|Agente|Avançado|8|LLM,Ads,CRM|Plano de marketing semanal|Analisa canais e sugere onde investir a verba.
+Modelos de IA|Agente CSO|Agente|Avançado|8|LLM,CRM|Funil acompanhado diariamente|Acompanha o funil e cobra próximos passos do time comercial.
+Modelos de IA|Agente de pesquisa de mercado|Agente|Intermediário|4|Busca web,LLM|Relatórios de mercado em horas|Pesquisa, cita fontes e resume tendências de um mercado.
+Modelos de IA|Avaliação de modelos de IA para sua tarefa|Análise|Avançado|6|LLM,Planilha|Modelo certo pelo menor custo|Compara modelos de linguagem em qualidade e custo com seus exemplos.
+Modelos de IA|Agente com memória do cliente|Agente|Avançado|10|LLM,Banco de dados|Conversas que lembram o contexto|Arquitetura de agente que guarda preferências e histórico.
+Modelos de IA|Orquestrador de múltiplos agentes|Agente|Avançado|14|LLM,n8n|Processos completos sem humano|Coordena agentes especialistas em um fluxo de ponta a ponta.
+Modelos de IA|Agente que usa o computador|Agente|Avançado|12|LLM,Navegador|Tarefas em sistemas sem API|Executa tarefas em sistemas antigos pela interface.
+Modelos de IA|Classificador de documentos|Ferramenta|Intermediário|4|LLM,Drive|Documentos organizados sozinhos|Classifica e renomeia arquivos por tipo e cliente.
+Modelos de IA|Extrator de dados estruturados|Ferramenta|Intermediário|4|LLM,OCR|Planilhas a partir de qualquer texto|Transforma textos e PDFs em tabelas.
+Modelos de IA|Guardrails e revisão de respostas|Ferramenta|Avançado|6|LLM|Agentes sem respostas perigosas|Camada que revisa respostas antes de chegarem ao cliente.
+Modelos de IA|Servidor MCP para seus sistemas|Ferramenta|Avançado|10|MCP,API|Assistentes acessam seus sistemas|Conecta ERP e CRM a assistentes de IA com segurança.
+## RH (18)
+RH|Triagem de currículos com critérios da vaga|Agente|Iniciante|2|Formulário,LLM,Drive|Triagem 5x mais rápida|Ranqueia currículos contra os critérios e justifica cada nota.
+RH|Assistente de onboarding de funcionários|Agente|Intermediário|5|RAG,Teams,Notion|-70% dúvidas no RH|Tira dúvidas de novos colaboradores 24h por dia.
+RH|Descrição de vagas inclusivas|Ferramenta|Iniciante|1|LLM|Vagas publicadas em minutos|Escreve descrições claras e sem viés.
+RH|Entrevista de triagem por chat|Agente|Intermediário|4|Chat,LLM,ATS|Recrutador só entrevista finalistas|Faz perguntas iniciais e resume respostas para o recrutador.
+RH|Agendamento de entrevistas|Automação|Iniciante|2|Agenda,E-mail|-35% tempo de contratação|Combina horários entre candidato e gestores.
+RH|Pesquisa de clima com análise|Análise|Iniciante|3|Formulário,LLM|Temas de clima por área|Aplica a pesquisa e agrupa comentários abertos.
+RH|Plano de desenvolvimento individual|Ferramenta|Intermediário|3|LLM,Docs|PDI para todo o time|Sugere metas e cursos a partir da avaliação.
+RH|Treinamento de colaboradores com IA|Ferramenta|Intermediário|6|LMS,LLM|Treinamento personalizado por função|Cria trilhas e quizzes a partir dos manuais.
+RH|Política de uso de IA|Ferramenta|Iniciante|2|Docs,LLM|Política aprovada no mês|Modelo de política interna de IA adaptado à empresa.
+RH|Previsão de turnover|Análise|Avançado|8|RH,Python|Saídas antecipadas em 90 dias|Aponta quem tem maior risco de sair e por quê.
+RH|Feedback 360 resumido|Análise|Iniciante|2|Formulário,LLM|Feedback claro e acionável|Resume avaliações em pontos fortes e de melhoria.
+RH|Folha e ponto sem erro|Automação|Intermediário|5|Ponto,ERP|-90% ajustes manuais|Confere ponto e lançamentos antes de fechar a folha.
+RH|Assistente de benefícios|Agente|Iniciante|2|RAG,WhatsApp API|Dúvidas de benefícios resolvidas|Responde sobre plano de saúde, vale e férias.
+RH|Banco de talentos ativo|Automação|Intermediário|3|ATS,LLM|Vagas preenchidas com quem já se candidatou|Busca candidatos antigos para novas vagas.
+RH|Avaliação de desempenho assistida|Ferramenta|Intermediário|3|LLM,Docs|Avaliações mais justas|Ajuda gestores a escrever avaliações com exemplos.
+RH|Offboarding com entrevista de saída|Automação|Iniciante|2|Formulário,LLM|Motivos de saída mapeados|Conduz a entrevista de desligamento e resume os motivos.
+RH|Comunicação interna personalizada|Automação|Iniciante|2|E-mail,Teams,LLM|Comunicados lidos por todos|Adapta comunicados por área e cargo.
+RH|Mapa de competências da empresa|Análise|Intermediário|5|Planilha,LLM|Lacunas de habilidade visíveis|Mapeia habilidades do time e o que falta.
+## Financeiro (18)
+Financeiro|Conciliação de extratos e notas|Automação|Intermediário|5|OCR,Planilha,ERP|8h por semana economizadas|Cruza lançamentos e aponta divergências.
+Financeiro|Relatório gerencial em linguagem natural|Análise|Avançado|7|SQL,LLM,BI|Fechamento 3 dias antes|O gestor pergunta em português e recebe números e gráficos.
+Financeiro|Previsão de fluxo de caixa|Análise|Intermediário|5|ERP,Python|Caixa previsto para 90 dias|Projeta entradas e saídas com base no histórico.
+Financeiro|Contas a pagar automático|Automação|Intermediário|4|E-mail,OCR,ERP|Boletos lançados sem digitação|Lê boletos recebidos por e-mail e agenda pagamentos.
+Financeiro|Cobrança inteligente|Automação|Intermediário|4|ERP,WhatsApp API|-20% inadimplência|Define a régua de cobrança por perfil de cliente.
+Financeiro|Análise de crédito de clientes|Análise|Avançado|8|Bureau,Python|Menos calote nas vendas a prazo|Sugere limite de crédito por cliente.
+Financeiro|Categorização de despesas|Automação|Iniciante|2|Banco,LLM|DRE confiável|Classifica despesas no plano de contas.
+Financeiro|Detector de fraudes e anomalias|Análise|Avançado|8|ERP,Python|Gastos estranhos sinalizados|Alerta pagamentos fora do padrão.
+Financeiro|Orçamento anual assistido|Ferramenta|Intermediário|5|Planilha,LLM|Orçamento em dias, não semanas|Monta o orçamento a partir do histórico e das metas.
+Financeiro|Assistente fiscal|Agente|Intermediário|5|RAG,LLM|Dúvidas fiscais resolvidas|Responde dúvidas tributárias com base na legislação e nas regras da empresa.
+Financeiro|Reembolso de despesas por foto|Automação|Iniciante|2|App,OCR|Reembolso em 1 dia|O colaborador fotografa o recibo e o reembolso é lançado.
+Financeiro|Precificação com margem|Ferramenta|Intermediário|4|Planilha,ERP|Preço que garante margem|Calcula preço de venda com custos, impostos e margem.
+Financeiro|Painel financeiro para sócios|Análise|Intermediário|4|ERP,BI|Sócios alinhados todo mês|Painel de receita, margem e caixa com comentários.
+Financeiro|Fechamento contábil assistido|Automação|Avançado|8|ERP,LLM|Fechamento 40% mais rápido|Checklist e conferências automáticas de fechamento.
+Financeiro|Análise de custos por produto|Análise|Intermediário|5|ERP,Python|Produtos que dão prejuízo identificados|Calcula a margem real de cada produto.
+Financeiro|Valuation e cenários|Ferramenta|Avançado|6|Planilha,LLM|Cenários em minutos|Simula cenários de crescimento e valor da empresa.
+Financeiro|Gestão de contratos de fornecedores|Automação|Intermediário|4|Docs,LLM|Reajustes e vencimentos sob controle|Avisa vencimentos e reajustes de contratos.
+Financeiro|Análise de investimentos e captação|Ferramenta|Avançado|6|Planilha,LLM|Material de captação pronto|Prepara projeções e deck para investidores ou bancos.
+## Jurídico (14)
+Jurídico|Revisor de contratos com checklist|Agente|Avançado|8|LLM,Docs|-55% tempo de revisão|Compara contratos com o padrão da empresa e destaca riscos.
+Jurídico|Gerador de contratos padrão|Ferramenta|Intermediário|4|Docs,LLM|Contrato em 10 minutos|Monta contratos a partir de modelos aprovados.
+Jurídico|Pesquisa de jurisprudência|Agente|Intermediário|4|Busca,LLM|Pesquisa em minutos|Busca e resume decisões relevantes com referências.
+Jurídico|Acompanhamento de processos|Automação|Intermediário|4|Tribunais,LLM|Nenhum prazo perdido|Monitora andamentos e cria tarefas com prazos.
+Jurídico|Adequação à LGPD|Ferramenta|Intermediário|5|Docs,LLM|Mapa de dados pronto|Mapeia dados pessoais e gera documentos de adequação.
+Jurídico|Triagem de demandas jurídicas|Automação|Iniciante|2|Formulário,LLM|Jurídico foca no que importa|Classifica pedidos internos por tipo e urgência.
+Jurídico|Resumo de processos|Ferramenta|Iniciante|2|LLM,PDF|Processo entendido em 5 minutos|Resume peças e decisões de um processo.
+Jurídico|Minutas de petições|Ferramenta|Avançado|6|LLM,Docs|Primeira versão em minutos|Gera minutas a partir dos fatos e modelos do escritório.
+Jurídico|Atendimento inicial de escritório|Agente|Iniciante|3|WhatsApp API,LLM|Clientes qualificados antes da consulta|Faz a triagem do caso e agenda a consulta.
+Jurídico|Compliance de comunicações|Análise|Avançado|6|E-mail,LLM|Riscos sinalizados cedo|Revisa comunicações de risco segundo as políticas.
+Jurídico|Gestão de procurações e documentos|Automação|Iniciante|2|Drive,LLM|Documentos válidos e organizados|Controla validade de procurações e certidões.
+Jurídico|Cálculos trabalhistas assistidos|Ferramenta|Intermediário|4|Planilha,LLM|Cálculos conferidos|Ajuda a calcular verbas e confere os valores.
+Jurídico|Due diligence de documentos|Análise|Avançado|10|LLM,Drive|Due diligence 3x mais rápida|Lê grandes volumes de documentos e aponta riscos.
+Jurídico|Termos de uso e políticas de privacidade|Ferramenta|Iniciante|2|LLM,Docs|Site em conformidade|Gera termos e políticas adequados ao seu negócio.

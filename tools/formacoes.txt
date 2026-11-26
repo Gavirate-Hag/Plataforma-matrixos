@@ -1,0 +1,81 @@
+# escola|titulo|nivel|horas|aulas(;)
+Fundamentos|Fundamentos de IA para gestores|Iniciante|4|O que a IA faz bem e o que não faz;Como escolher o primeiro processo;Custos reais de um projeto de IA;Montando o plano de 90 dias
+Fundamentos|IA generativa sem mistério|Iniciante|3|Como um modelo de linguagem funciona;Tokens, contexto e limites;Alucinação e como evitar;Escolhendo a ferramenta certa
+Fundamentos|Engenharia de prompts para o dia a dia|Iniciante|4|A estrutura de um bom prompt;Exemplos e formato de saída;Prompts em cadeia;Biblioteca de prompts do time
+Fundamentos|Estratégia de IA para PMEs|Intermediário|5|Mapa de oportunidades;Priorização por impacto e esforço;Comprar, adaptar ou construir;Roadmap de 12 meses
+Fundamentos|Como medir o retorno da IA|Intermediário|3|Definindo a métrica certa;Antes e depois;Calculando o ROI;Apresentando para a diretoria
+Fundamentos|Governança, riscos e LGPD|Intermediário|4|Riscos de dados e de reputação;LGPD aplicada à IA;Política interna de uso;Comitê de IA na prática
+Fundamentos|Liderando a transformação com IA|Intermediário|4|Cultura e medo da substituição;Formando campeões internos;Comunicação da mudança;Rituais de adoção
+Fundamentos|IA para o dono do negócio|Iniciante|3|Onde está o dinheiro;Primeiras vitórias em 30 dias;Delegando para a IA;Rotina semanal com IA
+Fundamentos|Ferramentas essenciais de IA|Iniciante|3|Assistentes de chat;Transcrição e reuniões;Imagem e vídeo;Automação simples
+Fundamentos|Ética e uso responsável de IA|Iniciante|2|Vieses e justiça;Transparência com clientes;Direitos autorais;Checklist de uso responsável
+Agentes|Agentes de IA na prática|Intermediário|6|Anatomia de um agente;Prompts de sistema que funcionam;Ferramentas e ações;Quando passar para um humano
+Agentes|Agente de WhatsApp do zero|Iniciante|5|Conta e API do WhatsApp;Fluxo de conversa;Conectando ao CRM;Colocando no ar
+Agentes|Base de conhecimento com RAG|Intermediário|5|Preparando documentos;Busca semântica;Respostas com fonte;Mantendo a base atualizada
+Agentes|Agentes de voz|Avançado|6|Voz sintética e reconhecimento;Latência e naturalidade;Integração com telefonia;Roteiros de voz
+Agentes|Avaliando a qualidade de agentes|Avançado|4|Conjunto de testes;Métricas de qualidade;Revisão humana;Melhoria contínua
+Agentes|Agentes com memória|Avançado|4|Memória curta e longa;Perfil do cliente;Privacidade da memória;Casos de uso
+Agentes|Multiagentes e orquestração|Avançado|6|Quando usar vários agentes;Papéis e handoffs;Orquestração no n8n;Monitorando o fluxo
+Agentes|Segurança de agentes|Avançado|4|Injeção de prompt;Permissões mínimas;Guardrails;Auditoria de conversas
+Agentes|Agentes para atendimento|Intermediário|5|Mapeando as intenções;Tom de voz da marca;Escalonamento;Métricas de atendimento
+Agentes|Agentes para vendas|Intermediário|5|Qualificação conversacional;Objeções comuns;Agendamento;Passagem para o vendedor
+Automação|Automação sem código|Iniciante|4|Gatilhos, ações e fluxos;Seu primeiro fluxo;Planilhas e CRM;Tratamento de erros
+Automação|n8n do básico ao avançado|Intermediário|8|Instalação e nós;Webhooks e APIs;IA dentro do fluxo;Fluxos em produção
+Automação|Make para negócios|Iniciante|5|Cenários e módulos;Filtros e roteadores;Integrações comuns;Boas práticas
+Automação|APIs para quem não programa|Iniciante|3|O que é uma API;Lendo documentação;Autenticação;Testando chamadas
+Automação|Automação de documentos|Intermediário|4|OCR e extração;Validação de dados;Lançamento no sistema;Exceções
+Automação|Automação de e-mail e agenda|Iniciante|3|Triagem de e-mails;Respostas sugeridas;Agendamentos;Resumos diários
+Automação|Planilhas inteligentes com IA|Iniciante|3|Fórmulas com IA;Limpeza de dados;Classificação em massa;Relatórios automáticos
+Automação|Integração com ERPs|Avançado|6|Mapa de integrações;Leitura de dados;Escrita segura;Monitoramento
+Automação|Automação de processos financeiros|Intermediário|5|Contas a pagar;Conciliação;Cobrança;Relatórios
+Automação|Monitoramento e manutenção de automações|Intermediário|3|Logs e alertas;Falhas comuns;Versionamento;Documentação
+Vendas|IA no comercial: do lead ao fechamento|Intermediário|6|Prospecção com IA;Qualificação;Reunião assistida;Follow-up
+Vendas|SDR com IA|Intermediário|5|Papel do SDR com IA;Cadências;Qualificação automática;Métricas
+Vendas|CRM inteligente|Iniciante|4|Estrutura do funil;Dados que importam;Automação de etapas;Painéis
+Vendas|Prospecção outbound com IA|Intermediário|4|ICP e listas;Enriquecimento;Mensagens personalizadas;Volume com qualidade
+Vendas|Treinamento de vendedores com IA|Iniciante|3|Roleplay;Feedback de calls;Playbook vivo;Ritual semanal
+Vendas|Forecast e gestão do funil|Avançado|4|Dados do funil;Probabilidade por etapa;Previsão;Ações de gestão
+Vendas|Vendas pelo WhatsApp|Iniciante|4|Catálogo e pedido;Atendimento rápido;Recuperação;Pós-venda
+Vendas|Precificação e propostas com IA|Intermediário|3|Propostas rápidas;Preço por valor;Descontos;Negociação
+Vendas|Customer success e expansão|Intermediário|4|Saúde do cliente;Onboarding;Upsell;Renovação
+Vendas|Vendas B2B complexas com IA|Avançado|5|Mapa de decisores;Contas estratégicas;Propostas executivas;Ciclo longo
+Marketing|Marketing com IA|Iniciante|5|Planejamento;Conteúdo;Anúncios;Análise
+Marketing|Conteúdo para redes em escala|Iniciante|4|Pilares de conteúdo;Roteiros;Produção em lote;Calendário
+Marketing|Anúncios com IA|Intermediário|5|Criativos;Copys;Testes;Otimização
+Marketing|SEO na era da IA|Intermediário|4|Pesquisa de palavras;Conteúdo útil;Busca por IA;Medição
+Marketing|Vídeo com IA|Iniciante|4|Roteiro;Avatar e voz;Edição;Distribuição
+Marketing|Imagens e design com IA|Iniciante|3|Prompts de imagem;Identidade visual;Produtos;Direitos
+Marketing|E-mail marketing com IA|Iniciante|3|Segmentação;Textos;Automação;Métricas
+Marketing|Dados de marketing com IA|Intermediário|4|Rastreamento;Atribuição;Painéis;Decisões
+Marketing|Branding e posicionamento com IA|Intermediário|3|Pesquisa de mercado;Proposta de valor;Tom de voz;Consistência
+Marketing|Lançamentos com IA|Intermediário|4|Planejamento;Aquecimento;Conteúdo;Análise pós-lançamento
+Atendimento|Atendimento com IA|Iniciante|4|Mapa de atendimento;Autoatendimento;Atendente aumentado;Indicadores
+Atendimento|Central de ajuda que se atualiza|Intermediário|3|Estrutura da base;Artigos a partir de tickets;Busca;Manutenção
+Atendimento|Qualidade no atendimento com IA|Intermediário|3|Padrão de qualidade;Avaliação automática;Feedback;Treinamento
+Atendimento|Retenção e churn|Intermediário|4|Sinais de risco;Score de saúde;Playbooks;Medição
+Atendimento|Atendimento omnicanal|Intermediário|4|Canais;Histórico único;Roteamento;Experiência
+Atendimento|Atendimento para clínicas|Iniciante|3|Agendamento;Confirmação;Pós-consulta;Indicadores
+Atendimento|Atendimento para e-commerce|Iniciante|3|Pedidos;Trocas;Rastreio;Avaliações
+Atendimento|Voz do cliente|Intermediário|3|Coleta;Análise de sentimento;Temas;Ação
+Atendimento|Cobrança com IA|Intermediário|3|Régua de cobrança;Negociação;Canais;Indicadores
+Atendimento|Suporte técnico com IA|Avançado|4|Diagnóstico guiado;Base técnica;Escalonamento;Métricas
+Gestão e Dados|Dados e decisões com IA|Avançado|5|Organizando os dados;Perguntas ao banco;Painéis;Do piloto à operação
+Gestão e Dados|BI com IA|Intermediário|5|Modelagem;Painéis;Perguntas em linguagem natural;Distribuição
+Gestão e Dados|Finanças com IA|Intermediário|5|Fluxo de caixa;Conciliação;Análise;Relatórios
+Gestão e Dados|RH com IA|Iniciante|4|Recrutamento;Onboarding;Desenvolvimento;Clima
+Gestão e Dados|Jurídico com IA|Intermediário|4|Contratos;Pesquisa;Processos;Riscos
+Gestão e Dados|Operações e logística com IA|Intermediário|5|Estoque;Compras;Rotas;Qualidade
+Gestão e Dados|Produtividade pessoal com IA|Iniciante|2|E-mail;Reuniões;Escrita;Organização
+Gestão e Dados|Gestão de projetos de IA|Intermediário|4|Escopo;Piloto;Equipe;Entrega
+Gestão e Dados|Análise de dados sem programar|Iniciante|3|Planilhas;Gráficos;Perguntas aos dados;Conclusões
+Gestão e Dados|IA na indústria|Avançado|5|Manutenção;Qualidade;Planejamento;Segurança
+Construção|Criando apps com IA sem programar|Iniciante|6|Do problema à tela;Gerando o app;Banco de dados;Publicando
+Construção|Supabase para iniciantes|Intermediário|5|Tabelas;Autenticação;Segurança;APIs
+Construção|Do protótipo ao SaaS|Avançado|8|Arquitetura;Login e pagamentos;Deploy;Operação
+Construção|Integrando LLMs em sistemas|Avançado|6|APIs de modelos;Custos;Streaming;Avaliação
+Construção|MCP e conexão de assistentes|Avançado|4|O que é MCP;Criando um servidor;Segurança;Casos
+Construção|Python para automação com IA|Intermediário|6|Fundamentos;Bibliotecas;APIs de IA;Agendamento
+Construção|Bancos vetoriais e busca semântica|Avançado|4|Embeddings;Indexação;Busca híbrida;Qualidade
+Construção|Front-end com IA|Intermediário|5|Componentes;Design;Responsividade;Publicação
+Construção|Testes e qualidade em apps de IA|Avançado|4|Casos de teste;Avaliação automática;Regressão;Monitoramento
+Construção|Infraestrutura e custos de IA|Avançado|4|Hospedagem;Cache;Limites;Otimização de custo

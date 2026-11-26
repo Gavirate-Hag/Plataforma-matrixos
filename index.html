@@ -220,9 +220,11 @@ img{max-width:100%}
     <nav class="nav" id="nav">
       <a href="#home" data-r="home">Plataforma</a>
       <a href="#solucoes" data-r="solucoes">Soluções</a>
+      <a href="#formacoes" data-r="formacoes">Formações</a>
+      <a href="#ferramentas" data-r="ferramentas">Ferramentas</a>
       <a href="#cases" data-r="cases">Cases</a>
       <a href="#planos" data-r="planos">Planos</a>
-      <a href="#guia" data-r="guia">Guia de implementação</a>
+      <a href="#guia" data-r="guia">Guia</a>
     </nav>
     <div class="top-actions" id="topActions"></div>
     <button class="btn sm burger" id="burger" aria-label="Abrir menu" aria-expanded="false">Menu</button>
@@ -232,36 +234,21 @@ img{max-width:100%}
 <div id="view"></div>
 <div id="layer"></div>
 
+<script src="data/catalogo.js"></script>
 <script>
 /* ================= DADOS (exemplos do protótipo) ================= */
-const AREAS=["Vendas","Atendimento","Marketing","Financeiro","Operações","RH","Jurídico"];
-const SOLS=[
- {id:1,t:"Qualificador de leads no WhatsApp",a:"Vendas",tipo:"Agente",n:"Iniciante",h:3,d:"Agente que conversa com o lead, faz as perguntas de qualificação e entrega no CRM só quem tem perfil de compra.",st:["WhatsApp Business API","n8n","CRM"],r:"-40% tempo do SDR"},
- {id:2,t:"Central de respostas com base de conhecimento",a:"Atendimento",tipo:"Agente",n:"Intermediário",h:6,d:"Assistente que responde clientes com base nos seus manuais, políticas e histórico de tickets, e escala para humano quando não tem certeza.",st:["RAG","Zendesk","Make"],r:"62% dos tickets resolvidos sem humano"},
- {id:3,t:"Fábrica de conteúdo para redes",a:"Marketing",tipo:"Automação",n:"Iniciante",h:2,d:"A partir de um tema, gera roteiro, legenda e variações para 4 redes, já no calendário editorial.",st:["Planilha","LLM","Agendador"],r:"20 posts/semana com 1 pessoa"},
- {id:4,t:"Conciliação de extratos e notas",a:"Financeiro",tipo:"Automação",n:"Intermediário",h:5,d:"Lê extratos e notas fiscais, cruza lançamentos e aponta divergências para revisão.",st:["OCR","Planilha","ERP"],r:"8h/semana economizadas"},
- {id:5,t:"Triagem de currículos com critérios da vaga",a:"RH",tipo:"Agente",n:"Iniciante",h:2,d:"Ranqueia currículos contra os critérios da vaga e gera um resumo justificado de cada candidato.",st:["Formulário","LLM","Drive"],r:"Triagem 5x mais rápida"},
- {id:6,t:"Revisor de contratos com checklist",a:"Jurídico",tipo:"Agente",n:"Avançado",h:8,d:"Compara contratos recebidos com o padrão da empresa e destaca cláusulas de risco para o jurídico.",st:["LLM","Docs","Assinatura digital"],r:"-55% tempo de revisão"},
- {id:7,t:"Previsão de ruptura de estoque",a:"Operações",tipo:"Análise",n:"Avançado",h:10,d:"Modelo que cruza vendas, sazonalidade e prazos de fornecedor para avisar antes de faltar produto.",st:["Python","BI","ERP"],r:"-30% rupturas"},
- {id:8,t:"Follow-up automático pós-proposta",a:"Vendas",tipo:"Automação",n:"Iniciante",h:2,d:"Sequência de mensagens personalizadas com base no que foi conversado na reunião.",st:["Transcrição","CRM","E-mail"],r:"+18% conversão de propostas"},
- {id:9,t:"Pesquisa de satisfação que se analisa sozinha",a:"Atendimento",tipo:"Análise",n:"Iniciante",h:3,d:"Agrupa respostas abertas por tema e sentimento e envia um resumo semanal para a liderança.",st:["Formulário","LLM","Slack"],r:"Leitura de 2 mil respostas em minutos"},
- {id:10,t:"Gerador de anúncios com testes A/B",a:"Marketing",tipo:"Automação",n:"Intermediário",h:4,d:"Cria variações de criativo e texto, sobe nas campanhas e pausa as piores automaticamente.",st:["Meta Ads","Imagem IA","Make"],r:"-22% custo por lead"},
- {id:11,t:"Assistente de onboarding de funcionários",a:"RH",tipo:"Agente",n:"Intermediário",h:5,d:"Tira dúvidas de novos colaboradores sobre benefícios, ferramentas e processos, 24h por dia.",st:["RAG","Teams","Notion"],r:"-70% dúvidas no RH"},
- {id:12,t:"Relatório gerencial em linguagem natural",a:"Financeiro",tipo:"Análise",n:"Avançado",h:7,d:"O gestor pergunta em português e recebe números, gráfico e explicação a partir do banco de dados.",st:["SQL","LLM","BI"],r:"Fechamento 3 dias antes"},
-];
+const SOLS=window.MX_SOLS, TRILHAS=window.MX_FORMACOES;
+const AREAS=[...new Set(SOLS.map(s=>s.a))];
+const ESCOLAS=[...new Set(TRILHAS.map(f=>f.e))];
+const solBy=t=>(SOLS.find(s=>s.t===t)||{}).id;
+const formBy=t=>TRILHAS.find(f=>f.t===t);
 const CASES=[
- {e:"Rede de clínicas odontológicas",s:"Saúde",p:"38 funcionários",a:"Atendimento",m:"-48%",ml:"faltas em consultas",d:"Agente de confirmação e reagendamento via WhatsApp integrado à agenda."},
+ {e:"Rede de clínicas odontológicas",s:"Saúde",p:"38 funcionários",a:"Atendimento e CS",m:"-48%",ml:"faltas em consultas",d:"Agente de confirmação e reagendamento via WhatsApp integrado à agenda."},
  {e:"Distribuidora de autopeças",s:"Varejo B2B",p:"120 funcionários",a:"Vendas",m:"+27%",ml:"pedidos recorrentes",d:"Recomendação de reposição para lojistas com base no histórico de compras."},
  {e:"Escritório de contabilidade",s:"Serviços",p:"15 funcionários",a:"Financeiro",m:"320h",ml:"economizadas por mês",d:"Leitura automática de documentos de clientes e lançamento no sistema contábil."},
  {e:"E-commerce de moda",s:"Varejo",p:"60 funcionários",a:"Marketing",m:"3,1x",ml:"retorno em anúncios",d:"Produção de criativos com IA e testes automáticos por público."},
  {e:"Construtora regional",s:"Construção",p:"200 funcionários",a:"Operações",m:"-19%",ml:"desperdício de material",d:"Previsão de compras por etapa de obra e alerta de desvios."},
  {e:"Indústria de alimentos",s:"Indústria",p:"450 funcionários",a:"RH",m:"-35%",ml:"tempo de contratação",d:"Triagem de currículos e agendamento automático de entrevistas."},
-];
-const TRILHAS=[
- {id:"t1",t:"Fundamentos de IA para gestores",nivel:"Iniciante",aulas:["O que a IA faz bem (e o que não faz)","Como escolher o primeiro processo","Custos reais de um projeto de IA","Riscos, LGPD e governança","Montando o plano de 90 dias"]},
- {id:"t2",t:"Agentes de IA na prática",nivel:"Intermediário",aulas:["Anatomia de um agente","Prompts de sistema que funcionam","Conectando o agente ao WhatsApp","Base de conhecimento (RAG)","Quando passar para um humano","Medindo a qualidade das respostas"]},
- {id:"t3",t:"Automação sem código",nivel:"Iniciante",aulas:["Gatilhos, ações e fluxos","Seu primeiro fluxo no n8n","Integração com planilhas e CRM","Tratamento de erros"]},
- {id:"t4",t:"Dados e decisões com IA",nivel:"Avançado",aulas:["Organizando os dados da empresa","Perguntas em linguagem natural ao banco","Painéis que a diretoria lê","Previsões simples que dão retorno","Do piloto à operação"]},
 ];
 const MENTORIAS=[
  {d:"02",m:"DEZ",h:"19:00",t:"Clínica de agentes: traga o seu para revisão",com:"Equipe MatrixOS",tipo:"Grupo",vagas:14},
@@ -276,7 +263,7 @@ const POSTS0=[
  {id:3,a:"Aline K.",c:"Head de RH · Indústria",t:"Alguém tem um modelo de política interna de uso de IA para compartilhar? Precisamos aprovar com o jurídico este mês.",l:8,tag:"RH",ago:"1 dia"},
 ];
 const PLANS=[
- {id:"Essencial",m:1490,desc:"Para quem quer começar a implementar com método.",f:["Catálogo completo de soluções prontas","Trilhas e aulas práticas","Consultor IA dentro da plataforma","Comunidade de empresários e gestores","2 mentorias em grupo por mês"],no:["Arquiteto de soluções dedicado","Sessões individuais"]},
+ {id:"Essencial",m:1490,desc:"Para quem quer começar a implementar com método.",f:["Catálogo com 200 soluções prontas","80 formações com certificado","Consultor IA dentro da plataforma","Comunidade de empresários e gestores","2 mentorias em grupo por mês"],no:["Arquiteto de soluções dedicado","Sessões individuais"]},
  {id:"Pro",m:2890,hl:true,desc:"Para empresas implementando em mais de uma área.",f:["Tudo do Essencial","Mentorias em grupo semanais","Soluções avançadas e modelos premium","Imersão presencial de implementação","Suporte prioritário em até 4h"],no:["Arquiteto de soluções dedicado"]},
  {id:"Corporate",m:5490,desc:"Para quem quer implementação assistida e sob medida.",f:["Tudo do Pro","Arquiteto de soluções dedicado","Construção de soluções sob medida","2 h/mês de mentoria individual","SLA dedicado e acesso para até 15 pessoas"],no:[]},
 ];
@@ -299,7 +286,10 @@ const S={
   liked:store.get("liked",[]),
   chat:store.get("chat",null),
   annual:true, solArea:"Todas", solQ:"", solTipo:"Todas", caseArea:"Todas",
-  trilha:"t1", aula:0, postTag:"Todos"
+  trilha:null, aula:0, postTag:"Todos", solLimit:24, escola:"Todas", fQ:"", tool:null,
+  diag:store.get("diag",{}), roi:{p:3,h:10,c:45,a:60,m:400,i:3000},
+  prio:store.get("prio",[{p:"Responder dúvidas de clientes no WhatsApp",i:4,f:4},{p:"Conciliação bancária",i:3,f:4},{p:"Previsão de estoque",i:5,f:2},{p:"Posts para redes sociais",i:2,f:5}]),
+  ag:{nome:"Lia",empresa:"Minha Empresa",obj:"Atendimento ao cliente",publico:"Clientes que já compraram",tom:"Cordial e direto",regras:"Nunca prometa prazos que não estão na base.\nNão fale de preços de concorrentes.",escala:"Reclamação grave, pedido de reembolso ou quando não souber a resposta.",canal:"WhatsApp"}, pt:"email", ptv:{}
 };
 const save=k=>store.set(k,S[k]);
 const $=s=>document.querySelector(s);
@@ -327,8 +317,8 @@ function planCards(){return `<div class="plans">${PLANS.map(p=>`<article class="
 function billingToggle(){return `<div class="toggle" role="group" aria-label="Ciclo de cobrança"><button data-cycle="m" class="${S.annual?"":"on"}">Mensal</button><button data-cycle="a" class="${S.annual?"on":""}">Anual −15%</button></div>`}
 function footer(){return `<footer><div class="wrap foot">
  <div><a class="logo" href="#home" style="padding:0">Matrix<b>OS</b></a><p class="muted" style="margin-top:10px;max-width:34ch">O sistema operacional de IA para pequenas e médias empresas brasileiras.</p><p class="demo-tag" style="margin-top:10px">PROTÓTIPO · dados e depoimentos são exemplos</p></div>
- <div><h4>Plataforma</h4><a href="#solucoes">Soluções</a><a href="#cases">Cases</a><a href="#planos">Planos</a><a href="#guia">Guia de implementação</a></div>
- <div><h4>Membros</h4><a href="#entrar">Entrar</a><a href="#trilhas">Trilhas</a><a href="#mentorias">Mentorias</a><a href="#comunidade">Comunidade</a></div>
+ <div><h4>Plataforma</h4><a href="#solucoes">Soluções</a><a href="#formacoes">Formações</a><a href="#ferramentas">Ferramentas</a><a href="#cases">Cases</a><a href="#planos">Planos</a><a href="#guia">Guia de implementação</a></div>
+ <div><h4>Membros</h4><a href="#entrar">Entrar</a><a href="#formacoes">Formações</a><a href="#mentorias">Mentorias</a><a href="#comunidade">Comunidade</a></div>
  <div><h4>Empresa</h4><a href="#guia">Sobre o método</a><a href="#planos">Para empresas</a><a href="#home">Termos e privacidade</a></div>
  </div></footer>`}
 
@@ -341,7 +331,7 @@ function pHome(){return `
  <div class="ctas"><a class="btn primary" href="#entrar">Começar teste de 7 dias</a><a class="btn" href="#planos">Ver planos</a></div>
  <p class="mono muted" style="margin-top:16px">Sem cartão no teste · cancele quando quiser</p></div>
  <div class="matrix" aria-hidden="true">
-  <div class="cell a"><span>Soluções</span><span class="k">${SOLS.length*13}</span></div>
+  <div class="cell a"><span>Soluções</span><span class="k">${SOLS.length}</span></div>
   <div class="cell"><span>Vendas</span><span class="k">↗</span></div>
   <div class="cell t"><span>Agentes</span><span class="k">24/7</span></div>
   <div class="cell e"></div>
@@ -356,11 +346,11 @@ function pHome(){return `
  </div>
 </div></section>
 <div class="wrap"><div class="stats">
- <div><div class="n">${SOLS.length*13}</div><div class="muted">soluções prontas</div></div>
+ <div><div class="n">${SOLS.length}</div><div class="muted">soluções prontas</div></div>
  <div><div class="n">380+</div><div class="muted">cases documentados</div></div>
- <div><div class="n">${TRILHAS.length*5}</div><div class="muted">trilhas práticas</div></div>
- <div><div class="n">8</div><div class="muted">mentorias ao vivo por mês</div></div>
-</div><p class="demo-tag" style="margin-top:8px">Números ilustrativos do protótipo</p></div>
+ <div><div class="n">${TRILHAS.length}</div><div class="muted">formações com certificado</div></div>
+ <div><div class="n">${TOOLS.length}</div><div class="muted">ferramentas de IA</div></div>
+</div><p class="demo-tag" style="margin-top:8px">Cases e mentorias são exemplos do protótipo</p></div>
 
 <section class="s"><div class="wrap">
  <div class="s-head"><div><span class="eyebrow">O método</span><h2>Quatro passos do diagnóstico ao resultado</h2></div></div>
@@ -386,9 +376,9 @@ function pHome(){return `
  <div class="s-head"><div><span class="eyebrow">O que tem dentro</span><h2>Uma área de membros feita para implementar</h2></div></div>
  <div class="grid g4">
   <div class="card"><span class="chip acc">Soluções</span><h3>Catálogo plug-and-play</h3><p class="muted">Modelos, fluxos e prompts prontos, com estimativa de horas e ferramentas.</p></div>
-  <div class="card"><span class="chip acc">Trilhas</span><h3>Aulas curtas e práticas</h3><p class="muted">Do fundamento à operação, com certificado ao concluir cada trilha.</p></div>
+  <div class="card"><span class="chip acc">Formações</span><h3>${TRILHAS.length} formações práticas</h3><p class="muted">${ESCOLAS.length} escolas, do fundamento à construção de apps, com certificado.</p></div>
   <div class="card"><span class="chip acc">Mentorias</span><h3>Ao vivo, toda semana</h3><p class="muted">Encontros em grupo e sessões individuais com arquitetos de solução.</p></div>
-  <div class="card"><span class="chip acc">Consultor IA</span><h3>Respostas na hora</h3><p class="muted">Pergunte sobre o seu caso e receba a solução e a trilha indicadas.</p></div>
+  <div class="card"><span class="chip acc">Ferramentas</span><h3>Diagnóstico, ROI e agentes</h3><p class="muted">Consultor IA, calculadora de ROI, construtor de agentes e mais.</p></div>
  </div>
 </div></section>
 
@@ -412,15 +402,19 @@ function pHome(){return `
 </div></section>
 ${footer()}`}
 
-function pSolucoes(){const tipos=["Todas","Agente","Automação","Análise"];
- const list=SOLS.filter(s=>(S.solArea==="Todas"||s.a===S.solArea)&&(S.solTipo==="Todas"||s.tipo===S.solTipo)&&(!S.solQ||(s.t+s.d).toLowerCase().includes(S.solQ.toLowerCase())));
+function pSolucoes(){const tipos=["Todas","Agente","Automação","Análise","Ferramenta"];
+ const q=S.solQ.toLowerCase();
+ const base=SOLS.filter(s=>(S.solTipo==="Todas"||s.tipo===S.solTipo)&&(!q||(s.t+" "+s.d+" "+s.st.join(" ")).toLowerCase().includes(q)));
+ const list=base.filter(s=>S.solArea==="Todas"||s.a===S.solArea);
+ const cnt=a=>a==="Todas"?base.length:base.filter(s=>s.a===a).length;
  return `<section class="s"><div class="wrap">
- <div class="s-head"><div><span class="eyebrow">Catálogo de soluções</span><h2>Soluções prontas para implementar</h2><p class="muted" style="margin-top:8px">Clique em uma solução para ver ferramentas, tempo estimado e resultado esperado.</p></div></div>
- <div class="filters"><input id="solQ" type="search" placeholder="Buscar solução, ex.: WhatsApp, contrato…" value="${esc(S.solQ)}" aria-label="Buscar soluções">
+ <div class="s-head"><div><span class="eyebrow">Catálogo de soluções</span><h2>${SOLS.length} soluções prontas para implementar</h2><p class="muted" style="margin-top:8px">Clique em uma solução para ver ferramentas, tempo estimado e resultado esperado.</p></div></div>
+ <div class="filters"><input id="solQ" type="search" placeholder="Buscar solução, ex.: WhatsApp, contrato, n8n…" value="${esc(S.solQ)}" aria-label="Buscar soluções">
   <select id="solTipo" aria-label="Tipo">${tipos.map(t=>`<option ${t===S.solTipo?"selected":""}>${t}</option>`).join("")}</select></div>
- <div class="filters">${["Todas",...AREAS].map(a=>`<button class="pill ${a===S.solArea?"on":""}" data-area="${a}">${a}</button>`).join("")}</div>
- <p class="mono muted" style="margin-bottom:12px">${list.length} ${list.length===1?"solução":"soluções"}</p>
- ${list.length?`<div class="grid g3">${list.map(solCard).join("")}</div>`:`<div class="empty">Nenhuma solução com esses filtros. Tente outra área ou limpe a busca.</div>`}
+ <div class="filters">${["Todas",...AREAS].map(a=>`<button class="pill ${a===S.solArea?"on":""}" data-area="${a}">${a} <span class="mono">${cnt(a)}</span></button>`).join("")}</div>
+ <p class="mono muted" style="margin-bottom:12px">${list.length} ${list.length===1?"solução":"soluções"}${list.length>S.solLimit?` · mostrando ${S.solLimit}`:""}</p>
+ ${list.length?`<div class="grid g3">${list.slice(0,S.solLimit).map(solCard).join("")}</div>`:`<div class="empty">Nenhuma solução com esses filtros. Tente outra área ou limpe a busca.</div>`}
+ ${list.length>S.solLimit?`<div style="display:flex;justify-content:center;margin-top:20px"><button class="btn" data-more="1">Mostrar mais ${Math.min(24,list.length-S.solLimit)}</button></div>`:""}
  </div></section>${footer()}`}
 
 function pCases(){const list=CASES.filter(c=>S.caseArea==="Todas"||c.a===S.caseArea);
@@ -430,7 +424,7 @@ function pCases(){const list=CASES.filter(c=>S.caseArea==="Todas"||c.a===S.caseA
  ${list.length?`<div class="grid g3">${list.map(caseCard).join("")}</div>`:`<div class="empty">Ainda não há cases nesta área.</div>`}
  </div></section>${footer()}`}
 
-function pPlanos(){const rows=[["Catálogo de soluções","✓","✓","✓"],["Trilhas e certificados","✓","✓","✓"],["Consultor IA","✓","✓","✓"],["Comunidade","✓","✓","✓"],["Mentorias em grupo","2/mês","Semanais","Semanais"],["Soluções avançadas","—","✓","✓"],["Imersão presencial","—","✓","✓"],["Arquiteto de soluções","—","—","✓"],["Mentoria individual","—","—","2 h/mês"],["Usuários incluídos","3","8","15"],["Suporte","E-mail","Prioritário 4h","SLA dedicado"]];
+function pPlanos(){const rows=[["Catálogo de soluções","✓","✓","✓"],["80 formações e certificados","✓","✓","✓"],["Ferramentas e Consultor IA","✓","✓","✓"],["Comunidade","✓","✓","✓"],["Mentorias em grupo","2/mês","Semanais","Semanais"],["Soluções avançadas","—","✓","✓"],["Imersão presencial","—","✓","✓"],["Arquiteto de soluções","—","—","✓"],["Mentoria individual","—","—","2 h/mês"],["Usuários incluídos","3","8","15"],["Suporte","E-mail","Prioritário 4h","SLA dedicado"]];
  return `<section class="s"><div class="wrap">
  <div class="s-head"><div><span class="eyebrow">Planos e preços</span><h2>Um plano para cada fase da implementação</h2><p class="muted" style="margin-top:8px">Troque de plano quando quiser pagando só a diferença.</p></div>${billingToggle()}</div>
  ${planCards()}
@@ -458,12 +452,12 @@ function pEntrar(){return `<div class="wrap"><form class="login card" id="loginF
 
 /* ================= ÁREA DE MEMBROS ================= */
 function trilhaProg(t){const d=S.done[t.id]||[];return {n:d.length,tot:t.aulas.length,pct:Math.round(d.length/t.aulas.length*100)}}
-function shell(r,inner){const links=[["painel","Painel"],["trilhas","Trilhas"],["biblioteca","Minhas soluções"],["mentorias","Mentorias"],["comunidade","Comunidade"],["consultor","Consultor IA"],["perfil","Perfil e certificados"]];
+function shell(r,inner){const links=[["painel","Painel"],["formacoes","Formações"],["biblioteca","Minhas soluções"],["ferramentas","Ferramentas"],["mentorias","Mentorias"],["comunidade","Comunidade"],["consultor","Consultor IA"],["perfil","Perfil e certificados"]];
  return `<div class="app"><aside class="side"><div class="lbl">Área de membros</div>${links.map(([k,l])=>`<a href="#${k}" class="${r===k?"on":""}">${l}</a>`).join("")}
  <div class="lbl">Explorar</div><a href="#solucoes">Catálogo de soluções</a><a href="#cases">Cases</a></aside><main class="main">${inner}</main></div>`}
 
 function aPainel(){const tot=TRILHAS.reduce((a,t)=>a+t.aulas.length,0),dn=TRILHAS.reduce((a,t)=>a+(S.done[t.id]||[]).length,0);
- const next=TRILHAS.find(t=>trilhaProg(t).pct<100)||TRILHAS[0];const nb=MENTORIAS.filter((m,i)=>S.booked.includes(i));
+ const next=TRILHAS.find(t=>{const p=trilhaProg(t);return p.n>0&&p.pct<100})||TRILHAS.find(t=>trilhaProg(t).pct<100)||TRILHAS[0];const nb=MENTORIAS.filter((m,i)=>S.booked.includes(i));
  return `<div><span class="eyebrow">Plano ${esc(S.user.plano)} · ${esc(S.user.empresa)}</span><h1 style="margin-top:6px">Olá, ${esc(S.user.nome.split(" ")[0])}</h1></div>
  <div class="kpis">
   <div class="card kpi"><span class="muted">Aulas concluídas</span><span class="n">${dn}/${tot}</span><div class="bar"><i style="width:${Math.round(dn/tot*100)}%"></i></div></div>
@@ -474,15 +468,28 @@ function aPainel(){const tot=TRILHAS.reduce((a,t)=>a+t.aulas.length,0),dn=TRILHA
  <div class="split">
   <div class="card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3>Continue de onde parou</h3><span class="chip">${next.nivel}</span></div>
    <p><b>${next.t}</b></p><div class="bar"><i style="width:${trilhaProg(next).pct}%"></i></div><p class="mono muted">${trilhaProg(next).n} de ${next.aulas.length} aulas</p>
-   <a class="btn primary" href="#trilhas" data-open-trilha="${next.id}" style="align-self:flex-start">Continuar trilha</a></div>
+   <a class="btn primary" href="#formacoes" data-open-trilha="${next.id}" style="align-self:flex-start">Continuar formação</a></div>
   <div class="card"><h3>Próximas mentorias</h3>${nb.length?nb.map(m=>`<div class="slot"><div class="date"><b>${m.d}</b>${m.m}</div><div style="flex:1;min-width:0"><b>${m.t}</b><div class="muted mono">${m.h}</div></div></div>`).join(""):`<p class="muted">Você ainda não reservou nenhuma.</p><a class="btn sm" href="#mentorias" style="align-self:flex-start">Ver agenda</a>`}</div>
  </div>
  <div><div class="s-head" style="margin-bottom:14px"><h3 style="font-size:20px">Recomendadas para você</h3><a class="btn sm" href="#solucoes">Catálogo completo</a></div>
  <div class="grid g3">${SOLS.filter(s=>!S.saved.includes(s.id)).slice(0,3).map(solCard).join("")}</div></div>`}
 
-function aTrilhas(){const t=TRILHAS.find(x=>x.id===S.trilha);const d=S.done[t.id]||[];const pr=trilhaProg(t);
- return `<div><span class="eyebrow">Trilhas</span><h1 style="margin-top:6px">Aprenda implementando</h1></div>
- <div class="filters">${TRILHAS.map(x=>{const p=trilhaProg(x);return `<button class="pill ${x.id===S.trilha?"on":""}" data-trilha="${x.id}">${x.t} · ${p.pct}%</button>`}).join("")}</div>
+function fCard(f){const p=trilhaProg(f);return `<article class="card"><div style="display:flex;justify-content:space-between;gap:8px"><span class="chip teal">${f.e}</span><span class="mono muted">${f.h}h · ${f.aulas.length} aulas</span></div>
+ <h3>${esc(f.t)}</h3><p class="muted">${f.aulas.slice(0,3).join(" · ")}…</p>
+ ${S.user&&p.n?`<div class="bar"><i style="width:${p.pct}%"></i></div><span class="mono muted">${p.pct}% concluído</span>`:""}
+ <div class="meta"><span class="chip">${f.nivel}</span>${S.user?`<button class="btn sm ${p.n?"primary":""}" data-open-f="${f.id}" style="margin-left:auto">${p.pct===100?"Rever":p.n?"Continuar":"Começar"}</button>`:`<a class="btn sm" href="#entrar" style="margin-left:auto">Entrar para assistir</a>`}</div></article>`}
+function vFormacoes(){if(S.user&&S.trilha&&formBy2(S.trilha))return vPlayer();
+ const q=S.fQ.toLowerCase();
+ const base=TRILHAS.filter(f=>!q||(f.t+" "+f.aulas.join(" ")).toLowerCase().includes(q));
+ const list=base.filter(f=>S.escola==="Todas"||f.e===S.escola);
+ const cnt=e=>e==="Todas"?base.length:base.filter(f=>f.e===e).length;
+ return `<div><span class="eyebrow">Formações</span><h1 style="margin-top:6px;font-size:clamp(26px,3.4vw,38px)">${TRILHAS.length} formações em ${ESCOLAS.length} escolas</h1><p class="muted" style="margin-top:6px">Aulas curtas e práticas, com certificado ao concluir cada formação.</p></div>
+ <div class="filters" style="margin:0"><input id="fQ" type="search" placeholder="Buscar formação ou aula, ex.: n8n, WhatsApp, LGPD…" value="${esc(S.fQ)}" aria-label="Buscar formações"></div>
+ <div class="filters" style="margin:0">${["Todas",...ESCOLAS].map(e=>`<button class="pill ${e===S.escola?"on":""}" data-escola="${e}">${e} <span class="mono">${cnt(e)}</span></button>`).join("")}</div>
+ ${list.length?`<div class="grid g3">${list.map(fCard).join("")}</div>`:`<div class="empty">Nenhuma formação encontrada. Tente outra busca.</div>`}`}
+function formBy2(id){return TRILHAS.find(x=>x.id===id)}
+function vPlayer(){const t=formBy2(S.trilha);const d=S.done[t.id]||[];const pr=trilhaProg(t);
+ return `<div><button class="btn sm" data-back-f="1">← Todas as formações</button><span class="eyebrow" style="display:block;margin-top:14px">${t.e} · ${t.nivel}</span><h1 style="margin-top:6px">${esc(t.t)}</h1></div>
  <div class="split">
   <div style="display:grid;gap:14px;min-width:0">
    <div class="player"><button class="play" id="playBtn" aria-label="Reproduzir aula"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M6 3l13 8-13 8z" fill="var(--accent-ink)"/></svg></button>
@@ -490,13 +497,105 @@ function aTrilhas(){const t=TRILHAS.find(x=>x.id===S.trilha);const d=S.done[t.id
    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="prevAula" ${S.aula===0?"disabled":""}>Aula anterior</button>
    <button class="btn primary" id="doneAula">${d.includes(S.aula)?"Concluída ✓":"Marcar como concluída"}</button>
    <button class="btn" id="nextAula" ${S.aula===t.aulas.length-1?"disabled":""}>Próxima aula</button></div>
-   <div class="card"><h3>Material de apoio</h3><p class="muted">Checklist da aula, modelo de prompt e planilha de cálculo de retorno. (No protótipo os arquivos são ilustrativos.)</p></div>
+   <div class="card"><h3>Material de apoio</h3><p class="muted">Checklist da aula, modelos de prompt e exercício prático. (No protótipo os vídeos e arquivos ainda não foram gravados.)</p></div>
   </div>
-  <div class="card"><div style="display:flex;justify-content:space-between"><h3>${t.t}</h3></div><div class="bar"><i style="width:${pr.pct}%"></i></div><p class="mono muted">${pr.n}/${pr.tot} concluídas · ${t.nivel}</p>
-   <div>${t.aulas.map((a,i)=>`<div class="lesson"><button class="check ${d.includes(i)?"done":""}" data-chk="${i}" aria-label="Concluir ${esc(a)}">${d.includes(i)?"✓":""}</button><a href="#trilhas" data-aula="${i}" style="text-decoration:none;flex:1;${i===S.aula?"font-weight:700":""}">${a}</a><span class="mono muted">${8+i*3} min</span></div>`).join("")}</div>
+  <div class="card"><h3>Conteúdo</h3><div class="bar"><i style="width:${pr.pct}%"></i></div><p class="mono muted">${pr.n}/${pr.tot} concluídas · ${t.h}h de conteúdo</p>
+   <div>${t.aulas.map((a,i)=>`<div class="lesson"><button class="check ${d.includes(i)?"done":""}" data-chk="${i}" aria-label="Concluir ${esc(a)}">${d.includes(i)?"✓":""}</button><a href="#formacoes" data-aula="${i}" style="text-decoration:none;flex:1;${i===S.aula?"font-weight:700":""}">${a}</a><span class="mono muted">${Math.round(t.h*60/t.aulas.length)} min</span></div>`).join("")}</div>
    ${pr.pct===100?`<a class="btn primary" href="#perfil">Ver certificado</a>`:""}
   </div>
  </div>`}
+
+/* ================= FERRAMENTAS ================= */
+const TOOLS=[
+ {id:"diagnostico",t:"Diagnóstico de maturidade em IA",d:"8 perguntas para saber em que estágio sua empresa está e quais formações fazer primeiro."},
+ {id:"roi",t:"Calculadora de ROI",d:"Economia mensal, payback e retorno em 12 meses de um projeto de IA."},
+ {id:"priorizador",t:"Priorizador de casos de uso",d:"Compare processos por impacto e facilidade e descubra por onde começar."},
+ {id:"agente",t:"Construtor de agentes",d:"Monte o prompt de sistema de um agente de atendimento, vendas ou suporte."},
+ {id:"prompts",t:"Gerador de prompts",d:"Modelos de prompt prontos para tarefas do dia a dia da empresa."},
+ {id:"consultor",t:"Consultor IA",d:"Converse sobre o seu caso e receba a solução e a formação indicadas."},
+];
+const DIAG=[
+ ["Como a equipe usa IA hoje?",["Ninguém usa","Alguns usam por conta própria","Usamos em tarefas, com regras","IA faz parte dos processos"],"Ferramentas essenciais de IA"],
+ ["Os processos estão documentados?",["Não","Poucos","A maioria","Todos, com dono e métricas"],"Estratégia de IA para PMEs"],
+ ["Onde ficam os dados da empresa?",["Espalhados em planilhas","Em sistemas sem integração","Parcialmente integrados","Centralizados e confiáveis"],"Análise de dados sem programar"],
+ ["Quanto já é automatizado?",["Nada","Algumas tarefas pontuais","Vários fluxos","Automação é o padrão"],"Automação sem código"],
+ ["Qual o papel da liderança?",["IA não é prioridade","Curiosidade","Há metas de IA","Há orçamento e responsável"],"Liderando a transformação com IA"],
+ ["A equipe recebe formação em IA?",["Não","Treinamentos pontuais","Em algumas áreas","Formação contínua"],"Fundamentos de IA para gestores"],
+ ["Existe política de uso de IA e LGPD?",["Não existe","Em discussão","Política básica","Política e governança ativas"],"Governança, riscos e LGPD"],
+ ["Vocês medem o resultado da IA?",["Não medimos","Só percepção","Medimos alguns projetos","ROI acompanhado"],"Como medir o retorno da IA"],
+];
+function toolDiag(){const n=Object.keys(S.diag).length;const score=Object.values(S.diag).reduce((a,b)=>a+b,0);
+ let res="";if(n===DIAG.length){const pct=Math.round(score/(DIAG.length*3)*100);const lv=pct<25?["Iniciante","Comece pelos fundamentos e por uma vitória rápida em 30 dias."]:pct<50?["Explorando","Vocês já experimentam. Agora é escolher 1 processo e medir o resultado."]:pct<75?["Implementando","A base existe. Foque em integrar dados e escalar o que deu certo."]:["Escalando","IA já é parte da operação. Hora de agentes e soluções sob medida."];
+  const weak=DIAG.map((q,i)=>[i,S.diag[i]]).sort((a,b)=>a[1]-b[1]).slice(0,3).map(([i])=>formBy(DIAG[i][2])).filter(Boolean);
+  res=`<div class="card" style="border:2px solid var(--accent)"><span class="eyebrow">Resultado</span><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span style="font-family:var(--f-display);font-weight:800;font-size:44px">${pct}%</span><h3>Nível: ${lv[0]}</h3></div><div class="bar"><i style="width:${pct}%;background:var(--accent)"></i></div><p>${lv[1]}</p>
+  <p class="mono muted">FORMAÇÕES RECOMENDADAS PARA OS SEUS PONTOS MAIS FRACOS</p><div class="grid g3">${weak.map(fCard).join("")}</div></div>`}
+ return `<p class="muted">${n} de ${DIAG.length} respondidas</p>${DIAG.map((q,i)=>`<fieldset class="card" style="margin:0"><legend style="font-weight:700;padding:0 4px">${i+1}. ${q[0]}</legend><div style="display:grid;gap:6px">${q[1].map((o,j)=>`<label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="radio" name="dq${i}" data-dq="${i}" value="${j}" ${S.diag[i]===j?"checked":""}> ${o}</label>`).join("")}</div></fieldset>`).join("")}
+ ${res}<div><button class="btn sm" data-diag-reset="1">Recomeçar diagnóstico</button></div>`}
+function roiCalc(){const r=S.roi;const horas=r.p*r.h*4.33*r.a/100;const eco=horas*r.c-r.m;const pay=eco>0?r.i/eco:Infinity;const roi12=r.i>0?(eco*12-r.i)/r.i*100:0;
+ return `<div class="kpis"><div class="card kpi"><span class="muted">Horas liberadas/mês</span><span class="n">${Math.round(horas)}h</span></div><div class="card kpi"><span class="muted">Economia líquida/mês</span><span class="n" style="color:${eco>=0?"var(--ok)":"var(--accent)"}">${brl(Math.round(eco))}</span></div><div class="card kpi"><span class="muted">Payback</span><span class="n">${isFinite(pay)?(pay<1?"< 1 mês":pay.toFixed(1).replace(".",",")+" meses"):"não se paga"}</span></div><div class="card kpi"><span class="muted">ROI em 12 meses</span><span class="n">${Math.round(roi12)}%</span></div></div>`}
+function toolRoi(){const f=[["p","Pessoas que fazem o processo",1],["h","Horas por semana, por pessoa",1],["c","Custo da hora (R$, com encargos)",1],["a","% do trabalho que a IA assume",5],["m","Custo mensal da solução (R$)",50],["i","Custo de implantação (R$)",500]];
+ return `<div class="card"><div class="grid g3">${f.map(([k,l,st])=>`<label style="display:grid;gap:6px;font-size:13px;font-weight:600" for="roi_${k}">${l}<input class="field" type="number" min="0" step="${st}" id="roi_${k}" data-roi="${k}" value="${S.roi[k]}"></label>`).join("")}</div></div>
+ <div id="roiOut">${roiCalc()}</div><p class="muted mono">Mês = 4,33 semanas. Economia líquida = horas liberadas × custo da hora − custo mensal.</p>`}
+function quad(r){return r.i>=3&&r.f>=3?["Comece por aqui","ok"]:r.i>=3?["Projeto estratégico","acc"]:r.f>=3?["Ganho rápido","teal"]:["Deixe para depois",""]}
+function toolPrio(){const rows=S.prio.map((r,i)=>({...r,idx:i})).sort((a,b)=>b.i*b.f-a.i*a.f);
+ const opts=v=>[1,2,3,4,5].map(n=>`<option ${n===v?"selected":""}>${n}</option>`).join("");
+ const X=f=>40+(f-1)/4*260,Y=i=>280-(i-1)/4*240;
+ return `<div class="split"><div class="card" style="min-width:0"><div class="tbl-wrap" style="border:0"><table style="min-width:480px"><thead><tr><th>Processo</th><th class="c">Impacto</th><th class="c">Facilidade</th><th></th></tr></thead><tbody>
+ ${S.prio.map((r,i)=>`<tr><td><input class="field" style="width:100%" data-prio="${i}" data-k="p" value="${esc(r.p)}" aria-label="Processo ${i+1}"></td><td class="c"><select class="field" data-prio="${i}" data-k="i" aria-label="Impacto">${opts(r.i)}</select></td><td class="c"><select class="field" data-prio="${i}" data-k="f" aria-label="Facilidade">${opts(r.f)}</select></td><td><button class="btn sm" data-prio-del="${i}" aria-label="Remover">✕</button></td></tr>`).join("")}
+ </tbody></table></div><button class="btn sm" data-prio-add="1" style="align-self:flex-start">+ Adicionar processo</button></div>
+ <div class="card"><svg viewBox="0 0 320 320" style="width:100%;max-width:100%" role="img" aria-label="Matriz impacto por facilidade">
+  <rect x="170" y="40" width="130" height="120" fill="var(--teal-soft)"/><line x1="40" y1="160" x2="300" y2="160" stroke="var(--line)"/><line x1="170" y1="40" x2="170" y2="280" stroke="var(--line)"/><rect x="40" y="40" width="260" height="240" fill="none" stroke="var(--line)"/>
+  <text x="170" y="306" text-anchor="middle" font-size="11" fill="var(--muted)">Facilidade →</text><text x="14" y="160" font-size="11" fill="var(--muted)" transform="rotate(-90 14 160)" text-anchor="middle">Impacto →</text>
+  <text x="296" y="56" text-anchor="end" font-size="10" fill="var(--teal)">Comece por aqui</text>
+  ${rows.map((r,k)=>`<circle cx="${X(r.f)}" cy="${Y(r.i)}" r="11" fill="var(--accent)"/><text x="${X(r.f)}" y="${Y(r.i)+4}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent-ink)">${k+1}</text>`).join("")}
+ </svg><ol style="margin:0;padding-left:20px;display:grid;gap:6px">${rows.map(r=>{const q=quad(r);return `<li>${esc(r.p||"(sem nome)")} <span class="chip ${q[1]}">${q[0]}</span></li>`}).join("")}</ol></div></div>`}
+function agPrompt(){const a=S.ag;return `Você é ${a.nome}, assistente virtual da ${a.empresa}, atendendo pelo ${a.canal}.
+
+OBJETIVO
+${a.obj}. Fale com: ${a.publico}.
+
+TOM DE VOZ
+${a.tom}. Mensagens curtas, uma pergunta por vez, em português do Brasil.
+
+COMO RESPONDER
+1. Use apenas as informações da base de conhecimento da ${a.empresa}.
+2. Se não tiver certeza, diga que vai confirmar e não invente.
+3. Confirme o que entendeu antes de executar qualquer ação.
+
+REGRAS
+${a.regras}
+
+QUANDO PASSAR PARA UM HUMANO
+${a.escala}
+Ao transferir, avise o cliente e envie ao atendente um resumo da conversa.`}
+function toolAgente(){const a=S.ag;const sel=(k,os)=>`<select class="field" id="ag_${k}" data-ag="${k}">${os.map(o=>`<option ${o===a[k]?"selected":""}>${o}</option>`).join("")}</select>`;
+ const inp=(k,l)=>`<label for="ag_${k}" style="display:grid;gap:6px;font-size:13px;font-weight:600">${l}<input class="field" id="ag_${k}" data-ag="${k}" value="${esc(a[k])}"></label>`;
+ const ta=(k,l)=>`<label for="ag_${k}" style="display:grid;gap:6px;font-size:13px;font-weight:600">${l}<textarea class="field" rows="3" id="ag_${k}" data-ag="${k}">${esc(a[k])}</textarea></label>`;
+ return `<div class="split"><div class="card">${inp("nome","Nome do agente")}${inp("empresa","Empresa")}
+ <label style="display:grid;gap:6px;font-size:13px;font-weight:600">Objetivo${sel("obj",["Atendimento ao cliente","Qualificação de leads","Agendamento de horários","Suporte interno aos colaboradores","Cobrança amigável"])}</label>
+ ${inp("publico","Com quem ele fala")}
+ <label style="display:grid;gap:6px;font-size:13px;font-weight:600">Tom de voz${sel("tom",["Cordial e direto","Formal","Descontraído","Técnico e preciso"])}</label>
+ <label style="display:grid;gap:6px;font-size:13px;font-weight:600">Canal${sel("canal",["WhatsApp","Chat do site","Instagram","E-mail","Telefone"])}</label>
+ ${ta("regras","Regras (uma por linha)")}${ta("escala","Quando passar para um humano")}</div>
+ <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h3>Prompt de sistema</h3><button class="btn sm primary" data-copy="agOut">Copiar</button></div><pre id="agOut" style="white-space:pre-wrap;font-family:var(--f-mono);font-size:12.5px;margin:0;background:var(--surface-2);padding:14px;border-radius:8px">${esc(agPrompt())}</pre></div></div>`}
+const PT=[
+ {id:"email",t:"E-mail de vendas",f:[["produto","O que você vende","Software de agenda para clínicas"],["publico","Para quem","Donos de clínicas odontológicas"],["dor","Principal dor do cliente","Muitas faltas nas consultas"]],p:v=>`Você é um vendedor consultivo B2B. Escreva um e-mail curto (até 120 palavras) para ${v.publico}, apresentando ${v.produto}.\nAbra pela dor: ${v.dor}.\nTom direto e humano, sem jargões. Termine com uma pergunta simples convidando para uma conversa de 15 minutos.\nEntregue 3 opções de assunto e o corpo do e-mail.`},
+ {id:"post",t:"Post para redes",f:[["tema","Tema","Como reduzir faltas em consultas"],["rede","Rede","Instagram"],["publico","Público","Donos de clínicas"]],p:v=>`Crie um post para ${v.rede} sobre "${v.tema}" para ${v.publico}.\nEstrutura: gancho forte na primeira linha, 3 dicas práticas numeradas, chamada para ação no final.\nLinguagem simples, frases curtas, no máximo 150 palavras. Sugira também 5 hashtags e uma ideia de imagem.`},
+ {id:"reuniao",t:"Resumo de reunião",f:[["tipo","Tipo de reunião","Reunião comercial com cliente"],["foco","O que não pode faltar","Próximos passos e responsáveis"]],p:v=>`Abaixo está a transcrição de uma ${v.tipo}.\nFaça um resumo com: 1) contexto em 2 linhas, 2) decisões tomadas, 3) ${v.foco}, 4) riscos ou dúvidas em aberto.\nUse tópicos curtos. Não invente nada que não esteja na transcrição.\n\nTranscrição:\n[cole aqui]`},
+ {id:"resposta",t:"Resposta a cliente",f:[["situacao","Situação","Cliente reclamando de atraso na entrega"],["politica","O que podemos oferecer","Frete grátis na próxima compra"],["tom","Tom","Empático e objetivo"]],p:v=>`Você é do atendimento da empresa. Situação: ${v.situacao}.\nEscreva uma resposta em tom ${v.tom.toLowerCase()}: reconheça o problema, peça desculpas uma vez, explique o que será feito e ofereça: ${v.politica}.\nNo máximo 80 palavras. Não prometa prazos que não foram informados.`},
+ {id:"planilha",t:"Análise de planilha",f:[["dados","O que a planilha contém","Vendas mensais por vendedor em 2026"],["pergunta","O que você quer descobrir","Quem caiu de desempenho e por quê"]],p:v=>`Vou enviar uma planilha com ${v.dados}.\nQuero descobrir: ${v.pergunta}.\nAntes de concluir, descreva as colunas que encontrou e qualquer dado faltante. Depois traga: 3 descobertas principais com números, 1 gráfico sugerido e 3 ações recomendadas.`},
+];
+function ptText(){const t=PT.find(x=>x.id===S.pt);const v={};t.f.forEach(([k,,d])=>v[k]=(S.ptv[t.id+k]??d)||d);return t.p(v)}
+function toolPrompts(){const t=PT.find(x=>x.id===S.pt);
+ return `<div class="filters" style="margin:0">${PT.map(x=>`<button class="pill ${x.id===S.pt?"on":""}" data-pt="${x.id}">${x.t}</button>`).join("")}</div>
+ <div class="split"><div class="card">${t.f.map(([k,l,d])=>`<label for="pt_${k}" style="display:grid;gap:6px;font-size:13px;font-weight:600">${l}<input class="field" id="pt_${k}" data-ptk="${t.id+k}" value="${esc(S.ptv[t.id+k]??d)}"></label>`).join("")}</div>
+ <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h3>Seu prompt</h3><button class="btn sm primary" data-copy="ptOut">Copiar</button></div><pre id="ptOut" style="white-space:pre-wrap;font-family:var(--f-mono);font-size:12.5px;margin:0;background:var(--surface-2);padding:14px;border-radius:8px">${esc(ptText())}</pre></div></div>`}
+const TOOLVIEW={diagnostico:toolDiag,roi:toolRoi,priorizador:toolPrio,agente:toolAgente,prompts:toolPrompts};
+function vFerramentas(){if(S.tool&&TOOLVIEW[S.tool]){const t=TOOLS.find(x=>x.id===S.tool);
+  return `<div><button class="btn sm" data-tool-back="1">← Todas as ferramentas</button><span class="eyebrow" style="display:block;margin-top:14px">Ferramenta</span><h1 style="margin-top:6px;font-size:clamp(26px,3.4vw,34px)">${t.t}</h1><p class="muted" style="margin-top:6px">${t.d}</p></div>${TOOLVIEW[S.tool]()}`}
+ return `<div><span class="eyebrow">Ferramentas</span><h1 style="margin-top:6px;font-size:clamp(26px,3.4vw,38px)">Ferramentas de IA da MatrixOS</h1><p class="muted" style="margin-top:6px">Use direto no navegador. Nada do que você digita sai do seu computador.</p></div>
+ <div class="grid g3">${TOOLS.map((t,i)=>`<article class="card click" tabindex="0" ${t.id==="consultor"?`data-go="consultor"`:`data-tool="${t.id}"`}><span class="chip acc">${t.id==="consultor"?"Membros":"Grátis"}</span><h3>${t.t}</h3><p class="muted">${t.d}</p><div class="meta"><span class="btn sm">Abrir</span></div></article>`).join("")}</div>`}
+function dual(fn,r){return S.user?shell(r,fn()):`<section class="s"><div class="wrap" style="display:grid;gap:22px">${fn()}</div></section>${footer()}`}
 
 function aBiblioteca(){const l=SOLS.filter(s=>S.saved.includes(s.id));
  return `<div><span class="eyebrow">Minhas soluções</span><h1 style="margin-top:6px">Soluções que você está implementando</h1></div>
@@ -520,27 +619,28 @@ function aComunidade(){const tags=["Todos","Vendas","Estratégia","RH","Ferramen
  <div class="card"><h3>Regras da casa</h3><p class="muted">Compartilhe números reais, sem venda direta e sem expor dados de clientes.</p></div></aside></div>`}
 
 const BOT=[
- [/whats|lead|vend|comercial/i,1,"t2","Para vendas, comece pelo Qualificador de leads no WhatsApp. Leva cerca de 3 horas para montar e costuma reduzir 40% do tempo do SDR.\n\nPróximo passo: assista à aula “Conectando o agente ao WhatsApp” e traga dúvidas na clínica de agentes do dia 02/12."],
- [/atend|suporte|cliente|ticket|sac/i,2,"t2","Para atendimento, a Central de respostas com base de conhecimento é a mais indicada. Ela responde com base nos seus manuais e chama um humano quando não tem certeza.\n\nComece reunindo as 30 perguntas mais frequentes do último mês."],
- [/financ|nota|concilia|contab|fechamento/i,4,"t3","No financeiro, a Conciliação de extratos e notas dá retorno rápido: em média 8 horas por semana economizadas. A trilha Automação sem código cobre tudo o que você vai precisar."],
- [/rh|curr|contrat|vaga|onboard/i,5,"t1","Para RH, a Triagem de currículos é a mais simples de implementar (cerca de 2 horas). Defina antes os 5 critérios obrigatórios da vaga."],
- [/marketing|post|conte|anúnc|anuncio|rede/i,3,"t3","Para marketing, a Fábrica de conteúdo para redes coloca 20 posts por semana no calendário com uma pessoa só."],
- [/contrato|juríd|jurid/i,6,"t4","Para o jurídico, o Revisor de contratos com checklist destaca cláusulas de risco. É uma solução avançada: recomendo fazer com o apoio de um arquiteto na mentoria."],
- [/começ|comec|primeiro|onde|não sei|nao sei/i,null,"t1","Uma boa regra: escolha um processo repetitivo, que acontece toda semana e que tenha um número fácil de medir. Me diga em qual área ele está (vendas, atendimento, financeiro, RH, marketing ou jurídico) e eu indico a solução."],
+ [/whats|lead|vend|comercial/i,"SDR de WhatsApp que qualifica leads","Agente de WhatsApp do zero","Para vendas, comece pelo SDR de WhatsApp que qualifica leads. Leva cerca de 3 horas para montar e costuma reduzir 40% do tempo do SDR.\n\nPara montar, faça a formação “Agente de WhatsApp do zero” e traga dúvidas na clínica de agentes do dia 02/12."],
+ [/atend|suporte|cliente|ticket|sac/i,"Central de respostas com base de conhecimento","Base de conhecimento com RAG","Para atendimento, a Central de respostas com base de conhecimento é a mais indicada. Ela responde com base nos seus manuais e chama um humano quando não tem certeza.\n\nComece reunindo as 30 perguntas mais frequentes do último mês e faça a formação “Base de conhecimento com RAG”."],
+ [/financ|nota|concilia|contab|fechamento|caixa/i,"Conciliação de extratos e notas","Automação de processos financeiros","No financeiro, a Conciliação de extratos e notas dá retorno rápido: em média 8 horas por semana economizadas. A formação “Automação de processos financeiros” cobre o passo a passo."],
+ [/rh|curr|contrat|vaga|onboard/i,"Triagem de currículos com critérios da vaga","RH com IA","Para RH, a Triagem de currículos é a mais simples de implementar (cerca de 2 horas). Defina antes os 5 critérios obrigatórios da vaga."],
+ [/marketing|post|conte|anúnc|anuncio|rede/i,"Fábrica de conteúdo para redes","Conteúdo para redes em escala","Para marketing, a Fábrica de conteúdo para redes coloca 20 posts por semana no calendário com uma pessoa só."],
+ [/juríd|jurid|processo judicial|advoga/i,"Revisor de contratos com checklist","Jurídico com IA","Para o jurídico, o Revisor de contratos com checklist destaca cláusulas de risco. É uma solução avançada: recomendo fazer com o apoio de um arquiteto na mentoria."],
+ [/estoque|compra|log[ií]stic|entrega|opera/i,"Previsão de ruptura de estoque","Operações e logística com IA","Em operações, a Previsão de ruptura de estoque costuma reduzir 30% das faltas de produto. Antes, vale organizar o histórico de vendas e os prazos dos fornecedores."],
+ [/começ|comec|primeiro|onde|não sei|nao sei/i,null,"Fundamentos de IA para gestores","Uma boa regra: escolha um processo repetitivo, que acontece toda semana e que tenha um número fácil de medir. Faça o Diagnóstico de maturidade em Ferramentas e me diga em qual área está o processo, que eu indico a solução."],
 ];
-function botReply(q){for(const [re,sol,tr,txt] of BOT){if(re.test(q))return {txt,sol,tr}}return {txt:"Entendi. Para indicar a solução certa, me conte duas coisas: em qual área está o processo e quantas vezes por semana ele acontece.",sol:null,tr:null}}
-function aConsultor(){if(!S.chat)S.chat=[{b:1,t:`Olá, ${S.user.nome.split(" ")[0]}! Sou o Consultor IA da MatrixOS. Conte qual processo da sua empresa toma mais tempo hoje e eu indico a solução e a trilha certas.`}];
+function botReply(q){for(const [re,st,ft,txt] of BOT){if(re.test(q))return {txt,sol:st?solBy(st):null,tr:ft?(formBy(ft)||{}).id:null}}return {txt:"Entendi. Para indicar a solução certa, me conte duas coisas: em qual área está o processo e quantas vezes por semana ele acontece.",sol:null,tr:null}}
+function aConsultor(){if(!S.chat)S.chat=[{b:1,t:`Olá, ${S.user.nome.split(" ")[0]}! Sou o Consultor IA da MatrixOS. Conte qual processo da sua empresa toma mais tempo hoje e eu indico a solução e a formação certas.`}];
  return `<div><span class="eyebrow">Consultor IA</span><h1 style="margin-top:6px">Diagnóstico do seu próximo projeto</h1><p class="demo-tag" style="margin-top:6px">PROTÓTIPO: respostas roteirizadas. Na versão final, conectado a um modelo de linguagem.</p></div>
- <div class="card"><div class="chat" id="chat">${S.chat.map(m=>`<div class="msg ${m.b?"bot":"me"}">${esc(m.t)}${m.sol?`<div style="margin-top:10px"><button class="btn sm" data-sol="${m.sol}">Ver solução indicada</button></div>`:""}</div>`).join("")}</div>
+ <div class="card"><div class="chat" id="chat">${S.chat.map(m=>`<div class="msg ${m.b?"bot":"me"}">${esc(m.t)}${m.sol||m.tr?`<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">${m.sol?`<button class="btn sm" data-sol="${m.sol}">Ver solução indicada</button>`:""}${m.tr?`<a class="btn sm" href="#formacoes" data-open-trilha="${m.tr}">Abrir formação</a>`:""}</div>`:""}</div>`).join("")}</div>
  <div class="sugs">${["Nosso comercial perde muitos leads no WhatsApp","Atendimento demora para responder","Fechamento financeiro é lento","Não sei por onde começar"].map(s=>`<button class="pill" data-sug="${esc(s)}">${s}</button>`).join("")}</div>
  <form class="composer" id="chatForm"><input id="chatIn" placeholder="Descreva o processo…" aria-label="Mensagem para o Consultor IA" autocomplete="off"><button class="btn primary" type="submit">Enviar</button><button class="btn" type="button" id="chatReset">Limpar</button></form></div>`}
 
 function aPerfil(){const certs=TRILHAS.filter(t=>trilhaProg(t).pct===100);
  return `<div><span class="eyebrow">Perfil</span><h1 style="margin-top:6px">${esc(S.user.nome)}</h1><p class="muted">${esc(S.user.empresa)} · Plano ${esc(S.user.plano)}</p></div>
  <div class="grid g2"><div class="card"><h3>Seu plano</h3><p>Plano <b>${esc(S.user.plano)}</b> · renovação em 26/11/2027</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn sm" href="#planos">Trocar de plano</a><button class="btn sm" id="logout">Sair</button></div></div>
- <div class="card"><h3>Progresso por trilha</h3>${TRILHAS.map(t=>{const p=trilhaProg(t);return `<div style="display:grid;gap:4px"><div style="display:flex;justify-content:space-between;gap:8px"><span>${t.t}</span><span class="mono muted">${p.pct}%</span></div><div class="bar"><i style="width:${p.pct}%"></i></div></div>`}).join("")}</div></div>
+ <div class="card"><h3>Formações em andamento</h3>${TRILHAS.filter(t=>trilhaProg(t).n>0).length?"":`<p class="muted">Nenhuma ainda. <a href="#formacoes">Escolha uma formação</a>.</p>`}${TRILHAS.filter(t=>trilhaProg(t).n>0).map(t=>{const p=trilhaProg(t);return `<div style="display:grid;gap:4px"><div style="display:flex;justify-content:space-between;gap:8px"><span>${t.t}</span><span class="mono muted">${p.pct}%</span></div><div class="bar"><i style="width:${p.pct}%"></i></div></div>`}).join("")}</div></div>
  <h3 style="font-size:20px">Certificados</h3>
- ${certs.length?`<div class="grid g2">${certs.map(t=>`<div class="cert"><span class="eyebrow">Certificado de conclusão</span><h2>${t.t}</h2><p>Concedido a <b>${esc(S.user.nome)}</b></p><p class="mono muted">${t.aulas.length} aulas · MatrixOS · ${new Date().toLocaleDateString("pt-BR")}</p></div>`).join("")}</div>`:`<div class="empty">Conclua todas as aulas de uma trilha para liberar o certificado.</div>`}`}
+ ${certs.length?`<div class="grid g2">${certs.map(t=>`<div class="cert"><span class="eyebrow">Certificado de conclusão</span><h2>${t.t}</h2><p>Concedido a <b>${esc(S.user.nome)}</b></p><p class="mono muted">${t.aulas.length} aulas · MatrixOS · ${new Date().toLocaleDateString("pt-BR")}</p></div>`).join("")}</div>`:`<div class="empty">Conclua todas as aulas de uma formação para liberar o certificado.</div>`}`}
 
 /* ================= MODAL DE SOLUÇÃO ================= */
 function openSol(id){const s=SOLS.find(x=>x.id==id);const sv=S.saved.includes(s.id);
@@ -555,14 +655,15 @@ function openSol(id){const s=SOLS.find(x=>x.id==id);const sv=S.saved.includes(s.
 function closeModal(){$("#layer").innerHTML=""}
 
 /* ================= ROTEADOR ================= */
+const DUAL={formacoes:vFormacoes,ferramentas:vFerramentas};
 const PUB={home:pHome,solucoes:pSolucoes,cases:pCases,planos:pPlanos,guia:pGuia,entrar:pEntrar};
-const APP={painel:aPainel,trilhas:aTrilhas,biblioteca:aBiblioteca,mentorias:aMentorias,comunidade:aComunidade,consultor:aConsultor,perfil:aPerfil};
+const APP={painel:aPainel,biblioteca:aBiblioteca,mentorias:aMentorias,comunidade:aComunidade,consultor:aConsultor,perfil:aPerfil};
 function route(){return (location.hash||"#home").slice(1)||"home"}
-function render(keepScroll){let r=route();
+function render(keepScroll){let r=route();if(r==="trilhas")r="formacoes";
  if(APP[r]&&!S.user){r="entrar"}
  if(r==="entrar"&&S.user){r="painel"}
  const v=$("#view");
- if(APP[r])v.innerHTML=shell(r,APP[r]());else v.innerHTML=(PUB[r]||pHome)();
+ if(DUAL[r])v.innerHTML=dual(DUAL[r],r);else if(APP[r])v.innerHTML=shell(r,APP[r]());else v.innerHTML=(PUB[r]||pHome)();
  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.r===r));
  $("#topActions").innerHTML=S.user?`<a class="btn sm hide-m" href="#consultor">Consultor IA</a><a class="btn sm primary" href="#painel">Minha área</a>`:`<a class="btn sm hide-m" href="#entrar">Entrar</a><a class="btn sm primary" href="#entrar">Teste grátis</a>`;
  $("#nav").classList.remove("open");$("#burger").setAttribute("aria-expanded","false");
@@ -572,20 +673,31 @@ function render(keepScroll){let r=route();
 window.addEventListener("hashchange",()=>render());
 
 /* ================= EVENTOS ================= */
-document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-sol]");if(!t)return;const d=t.dataset;
+document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-sol],[data-tool],[data-go]");if(!t)return;const d=t.dataset;
  if(t.id==="burger"){const n=$("#nav");n.classList.toggle("open");t.setAttribute("aria-expanded",n.classList.contains("open"));return}
  if("close" in d||t.id==="mod"){closeModal();return}
  if(d.save){const id=+d.save;S.saved=S.saved.includes(id)?S.saved.filter(x=>x!==id):[...S.saved,id];save("saved");toast(S.saved.includes(id)?"Solução salva na biblioteca":"Solução removida");closeModal();render(true);return}
  if(d.sol){openSol(d.sol);return}
  if(d.cycle){S.annual=d.cycle==="a";render(true);return}
  if(d.assinar){if(S.user){S.user.plano=d.assinar;save("user");toast("Plano alterado para "+d.assinar);location.hash="#perfil"}else{location.hash="#entrar";setTimeout(()=>{const s=$("#lgPlan");if(s)s.value=d.assinar},0)}return}
- if(d.area){S.solArea=d.area;render(true);return}
+ if(d.area){S.solArea=d.area;S.solLimit=24;render(true);return}
  if(d.carea){S.caseArea=d.carea;render(true);return}
- if(d.trilha){S.trilha=d.trilha;S.aula=0;render(true);return}
- if(d.openTrilha){S.trilha=d.openTrilha;const dn=S.done[d.openTrilha]||[];const t=TRILHAS.find(x=>x.id===d.openTrilha);S.aula=Math.max(0,t.aulas.findIndex((_,i)=>!dn.includes(i)));return}
+ if(d.openF){S.trilha=d.openF;const dn=S.done[d.openF]||[];const t=formBy2(d.openF);S.aula=Math.max(0,t.aulas.findIndex((_,i)=>!dn.includes(i)));render();return}
+ if(d.backF){S.trilha=null;render();return}
+ if(d.escola){S.escola=d.escola;render(true);return}
+ if(d.more){S.solLimit+=24;render(true);return}
+ if(d.tool){S.tool=d.tool;location.hash="#ferramentas";render();return}
+ if(d.go){location.hash="#"+d.go;return}
+ if(d.toolBack){S.tool=null;render();return}
+ if(d.diagReset){S.diag={};save("diag");render(true);return}
+ if(d.prioAdd){S.prio.push({p:"",i:3,f:3});save("prio");render(true);return}
+ if(d.prioDel){S.prio.splice(+d.prioDel,1);save("prio");render(true);return}
+ if(d.pt){S.pt=d.pt;render(true);return}
+ if(d.copy){const el=document.getElementById(d.copy);const txt=el.textContent;const done=()=>toast("Copiado");try{navigator.clipboard.writeText(txt).then(done,()=>{selectEl(el);toast("Texto selecionado: use Ctrl+C")})}catch(err){selectEl(el);toast("Texto selecionado: use Ctrl+C")}return}
+ if(d.openTrilha){S.trilha=d.openTrilha;const dn=S.done[d.openTrilha]||[];const t=TRILHAS.find(x=>x.id===d.openTrilha);S.aula=Math.max(0,t.aulas.findIndex((_,i)=>!dn.includes(i)));if(route()==="formacoes"){e.preventDefault();render()}return}
  if(d.aula){e.preventDefault();S.aula=+d.aula;render(true);return}
  if(d.chk!==undefined||t.id==="doneAula"){const i=d.chk!==undefined?+d.chk:S.aula;const arr=S.done[S.trilha]||[];S.done[S.trilha]=arr.includes(i)?arr.filter(x=>x!==i):[...arr,i];save("done");
-   const t2=TRILHAS.find(x=>x.id===S.trilha);if(S.done[S.trilha].length===t2.aulas.length)toast("Trilha concluída! Certificado liberado no perfil");render(true);return}
+   const t2=TRILHAS.find(x=>x.id===S.trilha);if(S.done[S.trilha].length===t2.aulas.length)toast("Formação concluída! Certificado liberado no perfil");render(true);return}
  if(t.id==="prevAula"){S.aula--;render(true);return}
  if(t.id==="nextAula"){S.aula++;render(true);return}
  if(t.id==="playBtn"){toast("Prévia: o vídeo da aula entra aqui");return}
@@ -597,10 +709,22 @@ document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-s
  if(t.id==="chatReset"){S.chat=null;save("chat");render(true);return}
  if(t.id==="logout"){S.user=null;save("user");location.hash="#home";render();return}
 });
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="Enter"){const c=e.target.closest&&e.target.closest(".card.click");if(c&&c.dataset.sol)openSol(c.dataset.sol)}});
-document.addEventListener("input",e=>{if(e.target.id==="solQ"){S.solQ=e.target.value;const pos=e.target.selectionStart;render(true);const i=$("#solQ");i.focus();i.setSelectionRange(pos,pos)}});
-document.addEventListener("change",e=>{if(e.target.id==="solTipo"){S.solTipo=e.target.value;render(true)}});
-function sendChat(q){q=q.trim();if(!q)return;S.chat.push({b:0,t:q});const r=botReply(q);S.chat.push({b:1,t:r.txt,sol:r.sol});save("chat");render(true)}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="Enter"){const c=e.target.closest&&e.target.closest(".card.click");if(c&&c.dataset.sol)openSol(c.dataset.sol);if(c&&(c.dataset.tool||c.dataset.go))c.click()}});
+function selectEl(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
+function rerenderKeep(id){const el=document.getElementById(id);const pos=el&&el.selectionStart;render(true);const n=document.getElementById(id);if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}}
+document.addEventListener("input",e=>{const t=e.target,d=t.dataset;
+ if(t.id==="solQ"){S.solQ=t.value;S.solLimit=24;rerenderKeep("solQ")}
+ if(t.id==="fQ"){S.fQ=t.value;rerenderKeep("fQ")}
+ if(d.roi){S.roi[d.roi]=Math.max(0,parseFloat(t.value)||0);$("#roiOut").innerHTML=roiCalc()}
+ if(d.ag){S.ag[d.ag]=t.value;$("#agOut").textContent=agPrompt()}
+ if(d.ptk){S.ptv[d.ptk]=t.value;$("#ptOut").textContent=ptText()}
+});
+document.addEventListener("change",e=>{const t=e.target,d=t.dataset;
+ if(t.id==="solTipo"){S.solTipo=t.value;S.solLimit=24;render(true)}
+ if(d.dq!==undefined){S.diag[+d.dq]=+t.value;save("diag");render(true)}
+ if(d.prio!==undefined){const r=S.prio[+d.prio];r[d.k]=d.k==="p"?t.value:+t.value;save("prio");render(true)}
+});
+function sendChat(q){q=q.trim();if(!q)return;S.chat.push({b:0,t:q});const r=botReply(q);S.chat.push({b:1,t:r.txt,sol:r.sol,tr:r.tr});save("chat");render(true)}
 document.addEventListener("submit",e=>{e.preventDefault();const f=e.target;
  if(f.id==="loginForm"){S.user={nome:$("#lgName").value.trim()||"Membro",empresa:$("#lgCo").value.trim()||"Sua empresa",plano:$("#lgPlan").value};save("user");toast("Bem-vindo à MatrixOS");location.hash="#painel"}
  if(f.id==="postForm"){const tx=$("#postTxt").value.trim();if(!tx)return;S.posts.unshift({id:Date.now(),a:S.user.nome,c:S.user.empresa,t:tx,l:0,tag:$("#postTag").value,ago:"agora"});save("posts");toast("Publicado na comunidade");render(true)}
