@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Plataforma MatrixOS</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -199,8 +204,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-block:36px;backg
 .cert{border:2px solid var(--fg);border-radius:var(--r);padding:28px;background:var(--surface);display:grid;gap:10px;text-align:center}
 .cert h2{font-size:28px}
 .demo-tag{font-family:var(--f-mono);font-size:11px;color:var(--warn)}
+[hidden]{display:none!important}
+body{margin:0}
+img{max-width:100%}
 </style>
 
+</head>
+<body>
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#home" aria-label="MatrixOS, início">
@@ -599,3 +609,6 @@ document.addEventListener("submit",e=>{e.preventDefault();const f=e.target;
 document.addEventListener("click",e=>{if(e.target.id==="mod")closeModal()});
 render();
 </script>
+
+</body>
+</html>
